@@ -1,80 +1,67 @@
-import 'dart:async';
-
-import 'package:crypt_io/api/binanace_api.dart';
+import 'package:crypt_io/controllers/coin_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class MarketChanges extends StatefulWidget {
-  const MarketChanges({Key? key}) : super(key: key);
+class MarketChanges extends StatelessWidget {
+  final CoinController controller;
 
-  @override
-  State<MarketChanges> createState() => _MarketChangesState();
-}
-
-class _MarketChangesState extends State<MarketChanges> {
-  double _marketStatus = 0.0;
-  late Timer _timer;
-
-  @override
-  void initState() {
-    super.initState();
-    _startTimer();
-  }
-
-  @override
-  void dispose() {
-    _timer.cancel();
-    super.dispose();
-  }
-
-  void _startTimer() {
-    _timer = Timer.periodic(
-      const Duration(seconds: 3),
-      (timer) => _getMarketStatus(),
-    );
-  }
-
-  Future<void> _getMarketStatus() async {
-    final marketStatus = await BinanceApi().getMarketChanges();
-    setState(() => _marketStatus = marketStatus);
-  }
+  const MarketChanges({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
-    final marketStatusText = _marketStatus > 0
-        ? 'Market is up'
-        : _marketStatus < 0
-            ? 'Market is down'
-            : 'Market is stable';
+    return Obx(
+      () {
+        final coinsList = controller.coinsList;
+        final btcPriceChange =
+            coinsList.isNotEmpty ? coinsList[0].priceChangePercentage24H : 0.0;
+        final ethPriceChange =
+            coinsList.isNotEmpty ? coinsList[1].priceChangePercentage24H : 0.0;
+        final marketChanges = (btcPriceChange + ethPriceChange) / 2;
 
-    final marketStatusColor = _marketStatus >= 0 ? Colors.green : Colors.red;
+        final marketChangesText = marketChanges > 0
+            ? 'Market is up'
+            : marketChanges < 0
+                ? 'Market is down'
+                : 'Market is stable';
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(
-          marketStatusText,
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-        Row(
+        final marketChangesIcon = marketChanges > 0
+            ? Icons.arrow_drop_up
+            : marketChanges < 0
+                ? Icons.arrow_drop_down
+                : null;
+
+        final marketChangesColor = marketChanges > 0
+            ? Colors.green
+            : marketChanges < 0
+                ? Colors.red
+                : Colors.grey;
+
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(
-              _marketStatus.isNegative
-                  ? Icons.trending_down_rounded
-                  : Icons.moving_rounded,
-              color: _marketStatus.isNegative ? Colors.red : Colors.green,
-            ),
-            const SizedBox(width: 5),
             Text(
-              '${_marketStatus.toStringAsFixed(2)}%',
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyMedium
-                  ?.copyWith(color: marketStatusColor),
+              marketChangesText,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            Row(
+              children: [
+                Icon(
+                  marketChangesIcon,
+                  color: marketChangesColor,
+                ),
+                Text(
+                  '${marketChanges.toStringAsFixed(2)}%',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.copyWith(color: marketChangesColor),
+                ),
+              ],
             ),
           ],
-        ),
-      ],
+        );
+      },
     );
   }
 }

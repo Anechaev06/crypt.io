@@ -21,14 +21,14 @@ class AppTextTheme {
     titleMedium: GoogleFonts.robotoMono(
       color: Colors.white,
       fontWeight: FontWeight.bold,
-      fontSize: 25,
+      fontSize: 22,
     ),
 
     // Headline
     headlineMedium: GoogleFonts.comfortaa(
       color: Colors.white,
-      // fontWeight: FontWeight.bold,
-      // fontSize: 30,
+      fontWeight: FontWeight.bold,
+      fontSize: 28,
     ),
 
     // Display

@@ -12,10 +12,9 @@ dependencies:
   cupertino_icons: ^1.0.5
   google_fonts: ^4.0.3
   http: ^0.13.5
-  web3dart: ^2.6.1
-  crypto_font_icons: ^1.0.1
   fl_chart: ^0.62.0
-  json_annotation: ^4.8.0
+  get: ^4.6.5
+  csv: ^5.0.0
   
 dev_dependencies:
   flutter_test:

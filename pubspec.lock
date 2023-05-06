@@ -161,14 +161,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.2"
-  crypto_font_icons:
+  csv:
     dependency: "direct main"
     description:
-      name: crypto_font_icons
-      sha256: "682bfc120599c04ced0c3a8120aaaac1bfd0a7c2109d23a62bf6c832d1932452"
+      name: csv
+      sha256: "016b31a51a913744a0a1655c74ff13c9379e1200e246a03d96c81c5d9ed297b5"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.1"
+    version: "5.0.2"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -185,22 +185,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.0"
-  eip1559:
-    dependency: transitive
-    description:
-      name: eip1559
-      sha256: de454d6321bd753eb79116e9ec4f8df20895c2e97f9a3839a032f3a728985516
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.6.1"
-  eip55:
-    dependency: transitive
-    description:
-      name: eip55
-      sha256: "213a9b86add87a5216328e8494b0ab836e401210c4d55eb5e521bd39e39169e1"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.2"
   equatable:
     dependency: transitive
     description:
@@ -275,6 +259,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.2.0"
+  get:
+    dependency: "direct main"
+    description:
+      name: get
+      sha256: "2ba20a47c8f1f233bed775ba2dd0d3ac97b4cf32fc17731b3dfc672b06b0e92a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.6.5"
   glob:
     dependency: transitive
     description:
@@ -340,21 +332,13 @@ packages:
     source: hosted
     version: "0.6.5"
   json_annotation:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: json_annotation
       sha256: c33da08e136c3df0190bd5bbe51ae1df4a7d96e7954d1d7249fea2968a72d317
       url: "https://pub.dev"
     source: hosted
     version: "4.8.0"
-  json_rpc_2:
-    dependency: transitive
-    description:
-      name: json_rpc_2
-      sha256: "5e469bffa23899edacb7b22787780068d650b106a21c76db3c49218ab7ca447e"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.2"
   lints:
     dependency: transitive
     description:
@@ -483,14 +467,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
-  pointycastle:
-    dependency: transitive
-    description:
-      name: pointycastle
-      sha256: "7c1e5f0d23c9016c5bbd8b1473d0d3fb3fc851b876046039509e18e0c7485f2c"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.7.3"
   pool:
     dependency: transitive
     description:
@@ -523,14 +499,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.2"
-  sec:
-    dependency: transitive
-    description:
-      name: sec
-      sha256: "8bbd56df884502192a441b5f5d667265498f2f8728a282beccd9db79e215f379"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.0"
   shelf:
     dependency: transitive
     description:
@@ -624,14 +592,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.1"
-  uuid:
-    dependency: transitive
-    description:
-      name: uuid
-      sha256: "648e103079f7c64a36dc7d39369cabb358d377078a051d6ae2ad3aa539519313"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.7"
   vector_math:
     dependency: transitive
     description:
@@ -640,14 +600,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
-  wallet:
-    dependency: transitive
-    description:
-      name: wallet
-      sha256: "569c91c2af13a9e1119c001f9c09218eccf3f383eb8d15ba13a5b558010c1bc0"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.12+1"
   watcher:
     dependency: transitive
     description:
@@ -656,14 +608,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.2"
-  web3dart:
-    dependency: "direct main"
-    description:
-      name: web3dart
-      sha256: "0b96223a6b284e3146e65dc842ded139eca68a85c4ab79c5ba1a73284927d3cd"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.6.1"
   web_socket_channel:
     dependency: transitive
     description:
