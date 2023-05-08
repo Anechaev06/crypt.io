@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class Arbitrage extends StatelessWidget {
-  const Arbitrage({super.key});
+class SignalsPage extends StatelessWidget {
+  const SignalsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +10,7 @@ class Arbitrage extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
-        title: const Text("Arbitrage"),
+        title: const Text("Singlas"),
       ),
     );
   }

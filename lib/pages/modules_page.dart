@@ -1,7 +1,7 @@
-import 'package:crypt_io/modules/arbitrage.dart';
-import 'package:crypt_io/modules/p2p.dart';
-import 'package:crypt_io/modules/strategies.dart';
 import 'package:flutter/material.dart';
+import 'package:crypt_io/modules/p2p.dart';
+import 'package:crypt_io/modules/p2p_pro.dart';
+import 'package:crypt_io/modules/signals.dart';
 
 class ModulesPage extends StatelessWidget {
   const ModulesPage({super.key});
@@ -12,12 +12,12 @@ class ModulesPage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // MetaMask
+          // Signals button
           OutlinedButton(
             onPressed: () => Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const Arbitrage(),
+                builder: (context) => const SignalsPage(),
               ),
             ),
             style: ButtonStyle(
@@ -28,28 +28,7 @@ class ModulesPage extends StatelessWidget {
               ),
             ),
             child: Text(
-              "MetaMask",
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-          ),
-
-          // Strategies button
-          OutlinedButton(
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const StrategiesPage(),
-              ),
-            ),
-            style: ButtonStyle(
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-            ),
-            child: Text(
-              "Strategies",
+              "Signals",
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
@@ -59,7 +38,7 @@ class ModulesPage extends StatelessWidget {
             onPressed: () => Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const P2P(),
+                builder: (context) => const P2pPage(),
               ),
             ),
             style: ButtonStyle(
@@ -75,12 +54,12 @@ class ModulesPage extends StatelessWidget {
             ),
           ),
 
-          // Arbitrage button
+          // P2P_pro button
           OutlinedButton(
             onPressed: () => Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const Arbitrage(),
+                builder: (context) => const P2pProPage(),
               ),
             ),
             style: ButtonStyle(

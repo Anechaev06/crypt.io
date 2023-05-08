@@ -13,10 +13,10 @@ class CoinPage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(controller.coinsList[index].symbol.toUpperCase()),
-          centerTitle: true,
           backgroundColor: Colors.transparent,
           elevation: 0,
+          centerTitle: true,
+          title: Text(controller.coinsList[index].symbol.toUpperCase()),
         ),
         body: Obx(() {
           return Column(
