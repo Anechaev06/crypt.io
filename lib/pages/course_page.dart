@@ -1,14 +1,15 @@
+import 'package:flutter/material.dart';
 import 'package:crypt_io/widgets/categories_widget.dart';
 import 'package:crypt_io/widgets/coin_widget.dart';
 import 'package:crypt_io/widgets/market_changes_widget.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/coin_controller.dart';
+import '../widgets/favorite_widget.dart';
 
 class CoursePage extends StatelessWidget {
   CoursePage({super.key});
-
   final CoinController controller = Get.put(CoinController());
+  Future<void> _refreshData() async => await controller.fetchCoins();
 
   @override
   Widget build(BuildContext context) {
@@ -16,51 +17,48 @@ class CoursePage extends StatelessWidget {
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.all(25),
-          child: SingleChildScrollView(
-            physics: const ScrollPhysics(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "In the past 24 hours",
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                const SizedBox(height: 5),
-                MarketChanges(controller: controller),
-                const CategoriesWidget(),
-                Obx(() {
-                  if (controller.isLoading) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (controller.coinsList.isEmpty) {
-                    return const Center(child: Text('No coins found.'));
-                  } else {
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: controller.coinsList.length,
-                      itemBuilder: (context, index) {
-                        return Column(
-                          children: [
-                            CoinWidget(
-                              index: index,
-                              controller: controller,
-                            ),
-                            const Divider(
-                              height: 25,
-                              thickness: 0.25,
-                              color: Colors.grey,
-                            )
-                          ],
-                        );
-                      },
-                    );
-                  }
-                }),
-              ],
+          child: RefreshIndicator(
+            onRefresh: _refreshData,
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  MarketChanges(controller: controller),
+                  const SizedBox(height: 25),
+                  const FavoriteCoinWidget(),
+                  const CategoriesWidget(),
+                  _buildCoinList(),
+                ],
+              ),
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildCoinList() {
+    return GetBuilder<CoinController>(
+      builder: (controller) {
+        if (controller.coinsList.isEmpty) {
+          return const Text('No coins found'); // Message when there is no data
+        }
+        return ListView.separated(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: controller.coinsList.length,
+          itemBuilder: (context, index) => CoinWidget(
+            index: index,
+            controller: controller,
+          ),
+          separatorBuilder: (context, index) => const Divider(
+            height: 15,
+            thickness: 0.25,
+            color: Colors.grey,
+          ),
+        );
+      },
     );
   }
 }

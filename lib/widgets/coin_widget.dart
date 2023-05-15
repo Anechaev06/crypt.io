@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../controllers/coin_controller.dart';
 import '../pages/coin_page.dart';
-import 'package:get/get.dart';
 
 class CoinWidget extends StatelessWidget {
   final int index;
@@ -15,6 +14,15 @@ class CoinWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final coin = controller.coinsList[index];
+    final coinPrice = coin.currentPrice;
+    final coinPriceChange = coin.priceChangePercentage24H;
+    final coinChangesColor = coinPriceChange > 0
+        ? Colors.green
+        : coinPriceChange < 0
+            ? Colors.red
+            : Colors.grey;
+
     return ElevatedButton(
       onPressed: () {
         Navigator.push(
@@ -41,34 +49,39 @@ class CoinWidget extends StatelessWidget {
               children: [
                 // Coin Image
                 SizedBox(
-                  height: 40,
-                  child: Image.network(
-                    controller.coinsList[index].image,
-                  ),
+                  height: 35,
+                  child: Image.network(coin.image),
                 ),
                 const SizedBox(width: 10),
                 // Coin Symbol
                 Text(
                   controller.coinsList[index].symbol.toUpperCase(),
-                  style: Theme.of(context).textTheme.titleMedium,
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium
+                      ?.copyWith(fontSize: 18),
                 ),
-                const SizedBox(width: 70),
-                // Coin Price Change 24H
-                Obx(() {
-                  return Text(
-                    '${controller.coinsList[index].priceChangePercentage24H.toStringAsFixed(1)}%',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  );
-                }),
               ],
             ),
-            // Coin Price
-            Obx(() {
-              return Text(
-                '\$${controller.coinsList[index].currentPrice.toStringAsFixed(2)}',
-                style: Theme.of(context).textTheme.bodyMedium,
-              );
-            }),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                // Coin Price
+                Text(
+                  '\$${coinPrice.toStringAsFixed(2)}',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                const SizedBox(height: 10),
+                // Coin Price Change 24h
+                Text(
+                  '${coinPriceChange.toStringAsFixed(1)}%',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.copyWith(color: coinChangesColor),
+                ),
+              ],
+            )
           ],
         ),
       ),

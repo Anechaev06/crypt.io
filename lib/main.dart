@@ -1,7 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:crypt_io/pages/course_page.dart';
 import 'package:crypt_io/pages/modules_page.dart';
 import 'package:crypt_io/themes/theme.dart';
-import 'package:flutter/material.dart';
 
 void main() => runApp(const MyApp());
 

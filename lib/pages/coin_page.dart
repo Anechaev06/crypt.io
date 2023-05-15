@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/coin_controller.dart';
+import '../widgets/favorite_widget.dart';
 
 class CoinPage extends StatelessWidget {
   final int index;
   final CoinController controller;
 
   const CoinPage({super.key, required this.controller, required this.index});
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -16,6 +16,10 @@ class CoinPage extends StatelessWidget {
           backgroundColor: Colors.transparent,
           elevation: 0,
           centerTitle: true,
+          actions: [
+            // Add favorite Button
+            FavoriteCoinButton(index: index)
+          ],
           title: Text(controller.coinsList[index].symbol.toUpperCase()),
         ),
         body: Obx(() {
@@ -47,7 +51,7 @@ class CoinPage extends StatelessWidget {
                   ],
                 ),
               ),
-              // Graph
+              // Chart
 
               const SizedBox(height: 600),
               // Buy sell

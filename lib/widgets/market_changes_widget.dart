@@ -36,30 +36,43 @@ class MarketChanges extends StatelessWidget {
                 ? Colors.red
                 : Colors.grey;
 
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              marketChangesText,
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            Row(
-              children: [
-                Icon(
-                  marketChangesIcon,
-                  color: marketChangesColor,
-                ),
-                Text(
-                  '${marketChanges.toStringAsFixed(2)}%',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium
-                      ?.copyWith(color: marketChangesColor),
-                ),
-              ],
-            ),
-          ],
+        return Padding(
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "In the past 24 hours",
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+              const SizedBox(height: 5),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    marketChangesText,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  Row(
+                    children: [
+                      Icon(
+                        marketChangesIcon,
+                        color: marketChangesColor,
+                      ),
+                      Text(
+                        '${marketChanges.toStringAsFixed(2)}%',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.copyWith(color: marketChangesColor),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
         );
       },
     );
