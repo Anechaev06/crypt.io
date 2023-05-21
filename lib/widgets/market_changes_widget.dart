@@ -11,12 +11,7 @@ class MarketChanges extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () {
-        final coinsList = controller.coinsList;
-        final btcPriceChange =
-            coinsList.isNotEmpty ? coinsList[0].priceChangePercentage24H : 0.0;
-        final ethPriceChange =
-            coinsList.isNotEmpty ? coinsList[1].priceChangePercentage24H : 0.0;
-        final marketChanges = (btcPriceChange + ethPriceChange) / 2;
+        final marketChanges = controller.marketChanges24H();
 
         final marketChangesText = marketChanges > 0
             ? 'Market is up'

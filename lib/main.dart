@@ -1,60 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:crypt_io/pages/course_page.dart';
-import 'package:crypt_io/pages/modules_page.dart';
-import 'package:crypt_io/themes/theme.dart';
+import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'controllers/metamask_controller.dart';
+import 'pages/login_page.dart';
+import 'themes/theme.dart';
+import 'widgets/navigation_widget.dart';
 
-void main() => runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+
+  runApp(MyApp(isLoggedIn: isLoggedIn));
+  Get.put(MetamaskController());
+}
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool isLoggedIn;
+
+  const MyApp({super.key, required this.isLoggedIn});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Crypt.io",
+      title: 'Crypt.io',
       theme: AppTheme.darkTheme,
       debugShowCheckedModeBanner: false,
-      home: const Main(),
-    );
-  }
-}
-
-class Main extends StatefulWidget {
-  const Main({super.key});
-
-  @override
-  State<Main> createState() => _MainState();
-}
-
-class _MainState extends State<Main> {
-  int _selectedIndex = 0;
-
-  void _onItemTapped(int index) => setState(() => _selectedIndex = index);
-
-  @override
-  Widget build(BuildContext context) {
-    final List<Widget> pages = [
-      CoursePage(),
-      const ModulesPage(),
-    ];
-    return SafeArea(
-      child: Scaffold(
-        body: pages.elementAt(_selectedIndex),
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _selectedIndex,
-          onTap: _onItemTapped,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.currency_bitcoin),
-              label: 'Course',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.polymer_rounded),
-              label: 'Modules',
-            ),
-          ],
-        ),
-      ),
+      home: isLoggedIn ? const NavigationWidget() : LoginPage(),
     );
   }
 }

@@ -13,25 +13,21 @@ class CoursePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(25),
-          child: RefreshIndicator(
-            onRefresh: _refreshData,
-            child: SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  MarketChanges(controller: controller),
-                  const SizedBox(height: 25),
-                  const FavoriteCoinWidget(),
-                  const CategoriesWidget(),
-                  _buildCoinList(),
-                ],
-              ),
-            ),
+    return Padding(
+      padding: const EdgeInsets.all(25),
+      child: RefreshIndicator(
+        onRefresh: _refreshData,
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              MarketChanges(controller: controller),
+              const SizedBox(height: 25),
+              const FavoriteCoinWidget(),
+              CategoriesWidget(controller: controller),
+              _buildCoinList(),
+            ],
           ),
         ),
       ),
@@ -41,9 +37,6 @@ class CoursePage extends StatelessWidget {
   Widget _buildCoinList() {
     return GetBuilder<CoinController>(
       builder: (controller) {
-        if (controller.coinsList.isEmpty) {
-          return const Text('No coins found'); // Message when there is no data
-        }
         return ListView.separated(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
