@@ -5,7 +5,7 @@ version: 1.0.0+1
 
 environment:
   sdk: '>=3.0.1 <4.0.0'
-  
+
 dependencies:
   flutter:
     sdk: flutter
@@ -35,15 +35,3 @@ flutter:
     - assets/
     - assets/images/
     - assets/P2P/
-
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
