@@ -11,32 +11,35 @@ class FavoriteCoinWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<CoinController>(
       builder: (controller) {
-        final favoriteCoins = controller.favorites;
-        return Column(
-          children: [
-            if (favoriteCoins.isNotEmpty)
-              const Text(
-                "Favorites",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-              ),
-            ListView.separated(
+        final favoriteCoinIds = controller.favorites;
+        if (favoriteCoinIds.isEmpty) {
+          return const SizedBox.shrink();
+        } else {
+          final favoriteCoinsIndices = controller.coinsList
+              .asMap()
+              .entries
+              .where((entry) => favoriteCoinIds.contains(entry.value.id))
+              .map((entry) => entry.key)
+              .toList();
+
+          return ConstrainedBox(
+            constraints: const BoxConstraints(maxHeight: 400.0),
+            child: ListView.separated(
               shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: favoriteCoins.length,
+              physics: const AlwaysScrollableScrollPhysics(),
+              itemCount: favoriteCoinsIndices.length,
               separatorBuilder: (context, index) => const Divider(
-                height: 25,
+                height: 5,
                 thickness: 0.25,
                 color: Colors.grey,
               ),
-              itemBuilder: (context, index) {
-                return CoinWidget(
-                  index: favoriteCoins[index],
-                  controller: controller,
-                );
-              },
+              itemBuilder: (context, index) => CoinWidget(
+                index: favoriteCoinsIndices[index],
+                controller: controller,
+              ),
             ),
-          ],
-        );
+          );
+        }
       },
     );
   }
@@ -50,7 +53,8 @@ class FavoriteCoinButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<CoinController>(
       builder: (controller) {
-        final isFavorite = controller.favorites.contains(index);
+        final String coinId = controller.coinsList[index].id;
+        final isFavorite = controller.favorites.contains(coinId);
         return IconButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.transparent,

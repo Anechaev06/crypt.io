@@ -1,4 +1,6 @@
+import 'package:crypt_io/widgets/favorite_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import '../controllers/metamask_controller.dart';
 
@@ -18,6 +20,7 @@ class ProfilePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
                       height: 125,
@@ -36,7 +39,18 @@ class ProfilePage extends StatelessWidget {
                     },
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Clipboard.setData(ClipboardData(
+                          text: metamaskController.userAddress.value));
+                    },
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                          side: const BorderSide(color: Colors.red),
+                        ),
+                      ),
+                    ),
                     child: Obx(
                       () {
                         final userAddress =
@@ -48,6 +62,14 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ),
                 ],
+              ),
+              const FavoriteCoinWidget(),
+              Text(
+                "App Settings",
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineMedium
+                    ?.copyWith(fontSize: 22),
               ),
             ],
           ),

@@ -4,7 +4,6 @@ import '../controllers/coin_controller.dart';
 
 class CategoriesWidget extends StatefulWidget {
   final CoinController controller;
-
   const CategoriesWidget({super.key, required this.controller});
 
   @override
