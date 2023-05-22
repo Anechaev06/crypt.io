@@ -49,7 +49,19 @@ class LoginPage extends StatelessWidget {
         ),
       );
     } catch (e) {
-      Text('Error: $e');
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Error'),
+          content: Text('Failed to connect: $e'),
+          actions: [
+            ElevatedButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
     }
   }
 }

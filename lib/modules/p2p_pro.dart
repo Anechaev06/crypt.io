@@ -19,7 +19,7 @@ class _P2pProPageState extends State<P2pProPage> {
   }
 
   Future<void> loadCSV() async {
-    String csvContent = await rootBundle.loadString('assets/P2P/P2P_pro.csv');
+    String csvContent = await rootBundle.loadString('assets/P2P_pro.csv');
     setState(() => data = const CsvToListConverter().convert(csvContent));
   }
 

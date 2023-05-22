@@ -5,7 +5,7 @@ import 'package:web3dart/web3dart.dart';
 
 class MetamaskController extends GetxController {
   static const String _infuraUrl =
-      'https://mainnet.infura.io/v3/0430f534a77347f493105efbfd376383';
+      'https://mainnet.infura.io/v3/e799541effb8472d8a0ac96631acd045';
 
   late final Web3Client _ethClient;
   late final Client _httpClient;
