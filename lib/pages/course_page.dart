@@ -4,7 +4,6 @@ import 'package:crypt_io/widgets/coin_widget.dart';
 import 'package:crypt_io/widgets/market_changes_widget.dart';
 import 'package:get/get.dart';
 import '../controllers/coin_controller.dart';
-import '../widgets/favorite_widget.dart';
 
 class CoursePage extends StatelessWidget {
   CoursePage({super.key});
@@ -24,7 +23,6 @@ class CoursePage extends StatelessWidget {
             children: [
               MarketChanges(controller: controller),
               const SizedBox(height: 25),
-              const FavoriteCoinWidget(),
               CategoriesWidget(controller: controller),
               _buildCoinList(),
             ],
@@ -41,14 +39,14 @@ class CoursePage extends StatelessWidget {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: controller.coinsList.length,
+          separatorBuilder: (context, index) => const Divider(
+            height: 10,
+            thickness: 0.25,
+            color: Colors.grey,
+          ),
           itemBuilder: (context, index) => CoinWidget(
             index: index,
             controller: controller,
-          ),
-          separatorBuilder: (context, index) => const Divider(
-            height: 15,
-            thickness: 0.25,
-            color: Colors.grey,
           ),
         );
       },

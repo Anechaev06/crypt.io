@@ -16,10 +16,7 @@ class CoinPage extends StatelessWidget {
           backgroundColor: Colors.transparent,
           elevation: 0,
           centerTitle: true,
-          actions: [
-            // Add favorite Button
-            FavoriteCoinButton(index: index)
-          ],
+          actions: [FavoriteCoinButton(index: index)],
           title: Text(controller.coinsList[index].symbol.toUpperCase()),
         ),
         body: Obx(() {

@@ -11,11 +11,12 @@ class CoinController extends GetxController {
 
   final _coinsList = <CoinModel>[].obs;
   final _originalCoinsList = <CoinModel>[].obs;
-  final List<int> _favoriteCoinsList = [];
+  final List<String> _favoriteCoinsList = [];
+  final Map<int, String> _indexToIdMap = {};
   final _isLoading = true.obs;
 
   List<CoinModel> get coinsList => _coinsList.toList();
-  List<int> get favorites => _favoriteCoinsList.toList();
+  List<String> get favorites => _favoriteCoinsList.toList();
   bool get isLoading => _isLoading.value;
 
   @override
@@ -32,6 +33,11 @@ class CoinController extends GetxController {
         final coins = coinModelFromJson(response.body);
         _coinsList.value = coins;
         _originalCoinsList.value = List.from(coins);
+
+        _indexToIdMap.clear();
+        for (var i = 0; i < coins.length; i++) {
+          _indexToIdMap[i] = coins[i].id;
+        }
       }
     } finally {
       _isLoading(false);
@@ -40,9 +46,11 @@ class CoinController extends GetxController {
   }
 
   void addFavorite(int index) {
-    _favoriteCoinsList.contains(index)
-        ? _favoriteCoinsList.remove(index)
-        : _favoriteCoinsList.add(index);
+    final String? coinId = _indexToIdMap[index];
+
+    _favoriteCoinsList.contains(coinId)
+        ? _favoriteCoinsList.remove(coinId)
+        : _favoriteCoinsList.add(coinId!);
     update();
   }
 
