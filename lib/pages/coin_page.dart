@@ -24,7 +24,7 @@ class CoinPage extends StatelessWidget {
             children: [
               // Price and price change
               Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(15),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -51,33 +51,53 @@ class CoinPage extends StatelessWidget {
               // Chart
 
               const SizedBox(height: 600),
-              // Buy sell
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      minimumSize: const Size(180, 55),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    // Chat gpt swap button here !!!
+                    ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        // backgroundColor: Colors.blueGrey,
+                        minimumSize: const Size(100, 50),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50),
+                        ),
                       ),
+                      child: const Text("Swap"),
                     ),
-                    child: const Text("Buy"),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red[500],
-                      minimumSize: const Size(180, 55),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      ),
+                    Row(
+                      // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            minimumSize: const Size(125, 50),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                          ),
+                          child: const Text("Buy"),
+                        ),
+                        const SizedBox(width: 10),
+                        ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red[500],
+                            minimumSize: const Size(125, 50),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                          ),
+                          child: const Text("Sell"),
+                        ),
+                      ],
                     ),
-                    child: const Text("Sell"),
-                  ),
-                ],
+                  ],
+                ),
               )
             ],
           );

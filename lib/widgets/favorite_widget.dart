@@ -23,10 +23,10 @@ class FavoriteCoinWidget extends StatelessWidget {
               .toList();
 
           return ConstrainedBox(
-            constraints: const BoxConstraints(maxHeight: 400.0),
+            constraints: const BoxConstraints(maxHeight: 237),
             child: ListView.separated(
               shrinkWrap: true,
-              physics: const AlwaysScrollableScrollPhysics(),
+              physics: const ClampingScrollPhysics(),
               itemCount: favoriteCoinsIndices.length,
               separatorBuilder: (context, index) => const Divider(
                 height: 5,
@@ -68,7 +68,7 @@ class FavoriteCoinButton extends StatelessWidget {
           icon: isFavorite
               ? const Icon(Icons.favorite_rounded)
               : const Icon(Icons.favorite_outline_rounded),
-          onPressed: () => controller.addFavorite(index),
+          onPressed: () => controller.addFavorite(coinId),
         );
       },
     );

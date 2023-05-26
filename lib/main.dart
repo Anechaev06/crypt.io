@@ -1,24 +1,25 @@
+import 'package:crypt_io/widgets/navigation_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'controllers/metamask_controller.dart';
 import 'pages/login_page.dart';
 import 'themes/theme.dart';
-import 'widgets/navigation_widget.dart';
 
-Future<void> main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
 
   runApp(MyApp(isLoggedIn: isLoggedIn));
-  Get.put(MetamaskController());
 }
 
 class MyApp extends StatelessWidget {
   final bool isLoggedIn;
 
-  const MyApp({super.key, required this.isLoggedIn});
+  MyApp({super.key, required this.isLoggedIn}) {
+    Get.put(MetamaskController());
+  }
 
   @override
   Widget build(BuildContext context) {

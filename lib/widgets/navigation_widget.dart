@@ -1,7 +1,6 @@
 import 'package:crypt_io/pages/profile_page.dart';
 import 'package:flutter/material.dart';
 import '../pages/course_page.dart';
-import '../pages/modules_page.dart';
 
 class NavigationWidget extends StatefulWidget {
   const NavigationWidget({super.key});
@@ -16,7 +15,6 @@ class _NavigationWidgetState extends State<NavigationWidget> {
   static final List<Widget> _pages = [
     CoursePage(),
     const ProfilePage(),
-    const ModulesPage(),
   ];
 
   void _onItemTapped(int index) {
@@ -39,10 +37,6 @@ class _NavigationWidgetState extends State<NavigationWidget> {
             BottomNavigationBarItem(
               icon: Icon(Icons.person_rounded),
               label: 'Profile',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.polymer_rounded),
-              label: 'Modules',
             ),
           ],
         ),

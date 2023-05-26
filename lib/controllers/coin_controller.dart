@@ -45,12 +45,10 @@ class CoinController extends GetxController {
     update();
   }
 
-  void addFavorite(int index) {
-    final String? coinId = _indexToIdMap[index];
-
+  void addFavorite(String coinId) {
     _favoriteCoinsList.contains(coinId)
         ? _favoriteCoinsList.remove(coinId)
-        : _favoriteCoinsList.add(coinId!);
+        : _favoriteCoinsList.add(coinId);
     update();
   }
 
