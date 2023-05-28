@@ -5,7 +5,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:web3dart/web3dart.dart';
 
 class MetamaskController extends GetxController {
-  // URLs and client setup
   static const String _infuraUrl =
       'https://mainnet.infura.io/v3/e799541effb8472d8a0ac96631acd045';
   static const String _bscUrl = 'https://bsc-dataseed.binance.org/';
@@ -13,13 +12,12 @@ class MetamaskController extends GetxController {
   late final Web3Client _bscClient;
   late Web3Client _activeClient;
 
-  // State variables
   final userAddress = ''.obs;
   final balance = '0'.obs;
   final hideBalance = false.obs;
   final activeNetwork = 'eth'.obs;
+  final isNotificationEnabled = true.obs;
 
-  // Initialization and cleanup
   @override
   void onInit() {
     super.onInit();
@@ -36,7 +34,6 @@ class MetamaskController extends GetxController {
     super.onClose();
   }
 
-  // Business logic
   void switchNetwork(String network) {
     _activeClient = network == 'eth' ? _ethClient : _bscClient;
     activeNetwork.value = network;
@@ -91,7 +88,7 @@ class MetamaskController extends GetxController {
 
       await saveData();
     } catch (e) {
-      print('Error in getBalance: $e');
+      // print('Error in getBalance: $e');
     }
   }
 
@@ -106,7 +103,7 @@ class MetamaskController extends GetxController {
         return jsonResponse['binancecoin']['usd'];
       }
     } catch (e) {
-      print('Error in getConversionRate: $e');
+      // print('Error in getConversionRate: $e');
       return 0.0;
     }
   }

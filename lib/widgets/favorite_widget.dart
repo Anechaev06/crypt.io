@@ -22,21 +22,18 @@ class FavoriteCoinWidget extends StatelessWidget {
               .map((entry) => entry.key)
               .toList();
 
-          return ConstrainedBox(
-            constraints: const BoxConstraints(maxHeight: 237),
-            child: ListView.separated(
-              shrinkWrap: true,
-              physics: const ClampingScrollPhysics(),
-              itemCount: favoriteCoinsIndices.length,
-              separatorBuilder: (context, index) => const Divider(
-                height: 5,
-                thickness: 0.25,
-                color: Colors.grey,
-              ),
-              itemBuilder: (context, index) => CoinWidget(
-                index: favoriteCoinsIndices[index],
-                controller: controller,
-              ),
+          return ListView.separated(
+            shrinkWrap: true,
+            physics: const ScrollPhysics(),
+            itemCount: favoriteCoinsIndices.length,
+            separatorBuilder: (context, index) => const Divider(
+              height: 5,
+              thickness: 0.25,
+              color: Colors.grey,
+            ),
+            itemBuilder: (context, index) => CoinWidget(
+              index: favoriteCoinsIndices[index],
+              controller: controller,
             ),
           );
         }

@@ -12,16 +12,11 @@ dependencies:
   cupertino_icons: ^1.0.5
   google_fonts: ^4.0.3
   http: ^0.13.6
-  fl_chart: ^0.62.0
   get: ^4.6.5
-  csv: ^5.0.0
-  anim_search_bar: ^2.0.3
   web3dart: ^2.6.1
-  flutter_dotenv: ^5.0.2
   provider: ^6.0.1
   shared_preferences: ^2.1.1
-  local_auth: ^2.1.6
-  uniswap: ^0.0.2
+  sliding_up_panel: ^2.0.0+1
   
 dev_dependencies:
   flutter_test:
