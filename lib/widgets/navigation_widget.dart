@@ -15,7 +15,7 @@ class _NavigationWidgetState extends State<NavigationWidget> {
 
   static final List<Widget> _pages = [
     CoursePage(),
-    SwapPage(),
+    const SwapPage(),
     const ProfilePage(),
   ];
 

@@ -8,6 +8,7 @@ class LoginPage extends StatelessWidget {
   final TextEditingController _addressController = TextEditingController();
 
   LoginPage({super.key});
+
   final double _borderRadius = 10.0;
   @override
   Widget build(BuildContext context) {

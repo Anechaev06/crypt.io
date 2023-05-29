@@ -26,15 +26,27 @@ class _SwapPageState extends State<SwapPage> {
     });
   }
 
-  DropdownButton<String> buildDropdown(
-      String? value, ValueChanged<String?> onChanged) {
-    return DropdownButton(
-      value: value,
-      hint: const Text('Select token'),
-      onChanged: onChanged,
-      items: tokens
-          .map((value) => DropdownMenuItem(value: value, child: Text(value)))
-          .toList(),
+  Container buildDropdown(String? value, ValueChanged<String?> onChanged) {
+    return Container(
+      padding: const EdgeInsets.all(8),
+      height: 50,
+      width: 125,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.orange),
+      ),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<String>(
+          value: value,
+          alignment: Alignment.center,
+          hint: const Text('Select'),
+          onChanged: onChanged,
+          items: tokens
+              .map(
+                  (value) => DropdownMenuItem(value: value, child: Text(value)))
+              .toList(),
+        ),
+      ),
     );
   }
 
@@ -64,7 +76,7 @@ class _SwapPageState extends State<SwapPage> {
             onPressed: () {
               // Submit the swap request
             },
-            child: const Text('Swap tokens'),
+            child: const Text('Swap'),
           ),
         ],
       ),
@@ -79,7 +91,7 @@ class _SwapPageState extends State<SwapPage> {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey),
-        borderRadius: BorderRadius.circular(5.0),
+        borderRadius: BorderRadius.circular(10.0),
       ),
       child: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -91,7 +103,7 @@ class _SwapPageState extends State<SwapPage> {
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
                   border: InputBorder.none,
-                  labelText: '0',
+                  labelText: 'Amount',
                 ),
               ),
             ),
