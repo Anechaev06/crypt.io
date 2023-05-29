@@ -1,4 +1,5 @@
 import 'package:crypt_io/pages/profile_page.dart';
+import 'package:crypt_io/pages/swap_page.dart';
 import 'package:flutter/material.dart';
 import '../pages/course_page.dart';
 
@@ -14,6 +15,7 @@ class _NavigationWidgetState extends State<NavigationWidget> {
 
   static final List<Widget> _pages = [
     CoursePage(),
+    SwapPage(),
     const ProfilePage(),
   ];
 
@@ -33,6 +35,10 @@ class _NavigationWidgetState extends State<NavigationWidget> {
             BottomNavigationBarItem(
               icon: Icon(Icons.currency_bitcoin),
               label: 'Course',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.swap_horiz_rounded),
+              label: 'Swap',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person_rounded),

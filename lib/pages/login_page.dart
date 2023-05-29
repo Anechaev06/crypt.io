@@ -8,7 +8,7 @@ class LoginPage extends StatelessWidget {
   final TextEditingController _addressController = TextEditingController();
 
   LoginPage({super.key});
-
+  final double _borderRadius = 10.0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,9 +18,26 @@ class LoginPage extends StatelessWidget {
           children: [
             TextField(
               controller: _addressController,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(_borderRadius),
+                ),
                 labelText: 'Enter your Ethereum address',
+                labelStyle: TextStyle(
+                    fontWeight: FontWeight.bold, color: Colors.grey[600]!),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: Colors.orange),
+                  borderRadius: BorderRadius.circular(_borderRadius),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey[400]!),
+                  borderRadius: BorderRadius.circular(_borderRadius),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: Colors.red),
+                  borderRadius: BorderRadius.circular(_borderRadius),
+                ),
+                errorStyle: const TextStyle(color: Colors.red),
               ),
             ),
             ElevatedButton(
