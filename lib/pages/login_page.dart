@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:crypt_io/widgets/navigation_widget.dart';
-import 'package:crypt_io/controllers/metamask_controller.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../services/metamask_service.dart';
+import '../widgets/navigation_widget.dart';
 
 class LoginPage extends StatelessWidget {
   final TextEditingController _addressController = TextEditingController();
+  final double _borderRadius = 10.0;
 
   LoginPage({super.key});
 
-  final double _borderRadius = 10.0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +23,7 @@ class LoginPage extends StatelessWidget {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(_borderRadius),
                 ),
-                labelText: 'Enter your Ethereum address',
+                labelText: 'Enter your private key',
                 labelStyle: TextStyle(
                     fontWeight: FontWeight.bold, color: Colors.grey[600]!),
                 focusedBorder: OutlineInputBorder(
@@ -53,10 +53,10 @@ class LoginPage extends StatelessWidget {
 
   Future<void> _connectButtonPressed(BuildContext context) async {
     final userAddress = _addressController.text;
-    final MetamaskController metamaskController = Get.find();
+    final MetamaskService metamaskController = Get.find();
 
     try {
-      await metamaskController.getBalance(userAddress);
+      await metamaskController.loginWithPrivateKey(userAddress);
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setBool('isLoggedIn', true);
 

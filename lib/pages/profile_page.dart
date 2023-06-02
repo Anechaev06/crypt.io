@@ -6,14 +6,14 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import '../controllers/metamask_controller.dart';
+import '../services/metamask_service.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final metamaskController = Get.find<MetamaskController>();
+    final metamaskController = Get.find<MetamaskService>();
 
     return SlidingUpPanel(
       panel: _buildSettingsSection(context, metamaskController),
@@ -40,7 +40,7 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _buildProfileSection(MetamaskController metamaskController) {
+  Widget _buildProfileSection(MetamaskService metamaskController) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -60,7 +60,7 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _buildElevatedButton(MetamaskController metamaskController) {
+  Widget _buildElevatedButton(MetamaskService metamaskController) {
     return ElevatedButton(
       onPressed: () {
         Clipboard.setData(
@@ -85,7 +85,7 @@ class ProfilePage extends StatelessWidget {
   }
 
   Widget _buildSettingsSection(
-      BuildContext context, MetamaskController metamaskController) {
+      BuildContext context, MetamaskService metamaskController) {
     return Padding(
       padding: const EdgeInsets.only(left: 30, right: 30),
       child: Column(
@@ -117,7 +117,7 @@ class ProfilePage extends StatelessWidget {
   }
 
   Widget _buildHideBalance(
-      BuildContext context, MetamaskController metamaskController) {
+      BuildContext context, MetamaskService metamaskController) {
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Obx(
@@ -138,7 +138,7 @@ class ProfilePage extends StatelessWidget {
   }
 
   Widget _buildNetwork(
-      BuildContext context, MetamaskController metamaskController) {
+      BuildContext context, MetamaskService metamaskController) {
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Row(
@@ -170,7 +170,7 @@ class ProfilePage extends StatelessWidget {
   }
 
   Widget _buildPushNotifications(
-      BuildContext context, MetamaskController metamaskController) {
+      BuildContext context, MetamaskService metamaskController) {
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Obx(
@@ -189,7 +189,7 @@ class ProfilePage extends StatelessWidget {
   }
 
   Widget _buildLogoutButton(
-      BuildContext context, MetamaskController metamaskController) {
+      BuildContext context, MetamaskService metamaskController) {
     return Padding(
       padding: const EdgeInsets.all(20),
       child: OutlinedButton(

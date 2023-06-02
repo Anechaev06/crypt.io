@@ -1,14 +1,12 @@
-import 'dart:async';
 import 'package:crypt_io/models/coin_model.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 enum CoinSortType { all, topGainers, topLosers }
 
-class CoinController extends GetxController {
+class CoinService extends GetxController {
   final _apiUrl =
-      'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false';
-
+      "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false";
   final _coinsList = <CoinModel>[].obs;
   final _originalCoinsList = <CoinModel>[].obs;
   final List<String> _favoriteCoinsList = [];

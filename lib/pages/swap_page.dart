@@ -1,4 +1,7 @@
+import 'package:crypt_io/services/metamask_service.dart';
+import 'package:crypt_io/services/swap_service.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SwapPage extends StatefulWidget {
   const SwapPage({super.key});
@@ -8,14 +11,16 @@ class SwapPage extends StatefulWidget {
 }
 
 class _SwapPageState extends State<SwapPage> {
-  static const tokens = ['ETH', 'BTC', "USDT"];
+  static const tokens = ['ETH', 'BTC', 'USDT'];
   String? dropdownValue1;
   String? dropdownValue2;
   String amount1 = '';
   String amount2 = '';
 
-  void swapTokens() {
-    setState(() {
+  final SwapService _swapController = Get.find<SwapService>();
+
+  void swapTokens() async {
+    try {
       final tempToken = dropdownValue1;
       dropdownValue1 = dropdownValue2;
       dropdownValue2 = tempToken;
@@ -23,7 +28,19 @@ class _SwapPageState extends State<SwapPage> {
       final tempAmount = amount1;
       amount1 = amount2;
       amount2 = tempAmount;
-    });
+
+      String? privateKey = MetamaskService().privateKey;
+      String tokenInAddress = dropdownValue1!;
+      String tokenOutAddress = dropdownValue2!;
+      BigInt amountIn = BigInt.from(double.parse(amount1));
+      BigInt minAmountOut = BigInt.from(double.parse(amount2));
+
+      await _swapController.swapTokens(
+          privateKey!, tokenInAddress, tokenOutAddress, amountIn, minAmountOut);
+    } catch (e) {
+      // Handle the error
+      // print(e);
+    }
   }
 
   Container buildDropdown(String? value, ValueChanged<String?> onChanged) {
@@ -73,9 +90,7 @@ class _SwapPageState extends State<SwapPage> {
           }),
           const SizedBox(height: 20),
           ElevatedButton(
-            onPressed: () {
-              // Submit the swap request
-            },
+            onPressed: swapTokens,
             child: const Text('Swap'),
           ),
         ],

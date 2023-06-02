@@ -3,11 +3,11 @@ import 'package:crypt_io/widgets/categories_widget.dart';
 import 'package:crypt_io/widgets/coin_widget.dart';
 import 'package:crypt_io/widgets/market_changes_widget.dart';
 import 'package:get/get.dart';
-import '../controllers/coin_controller.dart';
+import '../services/coin_service.dart';
 
 class CoursePage extends StatelessWidget {
   CoursePage({super.key});
-  final CoinController controller = Get.put(CoinController());
+  final CoinService controller = Get.put(CoinService());
   Future<void> _refreshData() async => await controller.fetchCoins();
 
   @override
@@ -33,7 +33,7 @@ class CoursePage extends StatelessWidget {
   }
 
   Widget _buildCoinList() {
-    return GetBuilder<CoinController>(
+    return GetBuilder<CoinService>(
       builder: (controller) {
         return ListView.separated(
           shrinkWrap: true,

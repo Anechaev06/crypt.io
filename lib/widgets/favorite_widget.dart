@@ -2,14 +2,14 @@ import 'package:crypt_io/constants/colors.dart';
 import 'package:crypt_io/widgets/coin_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/coin_controller.dart';
+import '../services/coin_service.dart';
 
 class FavoriteCoinWidget extends StatelessWidget {
   const FavoriteCoinWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<CoinController>(
+    return GetBuilder<CoinService>(
       builder: (controller) {
         final favoriteCoinIds = controller.favorites;
         if (favoriteCoinIds.isEmpty) {
@@ -48,7 +48,7 @@ class FavoriteCoinButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<CoinController>(
+    return GetBuilder<CoinService>(
       builder: (controller) {
         final String coinId = controller.coinsList[index].id;
         final isFavorite = controller.favorites.contains(coinId);

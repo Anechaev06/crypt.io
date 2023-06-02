@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/coin_controller.dart';
+import '../services/coin_service.dart';
 import '../widgets/favorite_widget.dart';
 
 class CoinPage extends StatelessWidget {
   final int index;
-  final CoinController controller;
+  final CoinService controller;
 
   const CoinPage({super.key, required this.controller, required this.index});
   @override

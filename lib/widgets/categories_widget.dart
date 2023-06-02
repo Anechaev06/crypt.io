@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import '../constants/colors.dart';
-import '../controllers/coin_controller.dart';
+import '../services/coin_service.dart';
 
 class CategoriesWidget extends StatefulWidget {
-  final CoinController controller;
+  final CoinService controller;
   const CategoriesWidget({super.key, required this.controller});
 
   @override

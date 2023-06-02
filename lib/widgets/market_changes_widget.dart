@@ -1,9 +1,9 @@
-import 'package:crypt_io/controllers/coin_controller.dart';
+import 'package:crypt_io/services/coin_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class MarketChanges extends StatelessWidget {
-  final CoinController controller;
+  final CoinService controller;
 
   const MarketChanges({super.key, required this.controller});
 

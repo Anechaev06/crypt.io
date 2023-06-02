@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../controllers/coin_controller.dart';
+import '../services/coin_service.dart';
 import '../pages/coin_page.dart';
 
 class CoinWidget extends StatelessWidget {
   final int index;
-  final CoinController controller;
+  final CoinService controller;
 
   const CoinWidget({
     super.key,
