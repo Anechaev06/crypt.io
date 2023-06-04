@@ -11,7 +11,7 @@ class SwapPage extends StatefulWidget {
 }
 
 class _SwapPageState extends State<SwapPage> {
-  static const tokens = ['ETH', 'BTC', 'USDT'];
+  static const tokens = ['ETH', 'USDT'];
   String? dropdownValue1;
   String? dropdownValue2;
   String amount1 = '';

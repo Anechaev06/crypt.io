@@ -29,6 +29,7 @@ class _NavigationWidgetState extends State<NavigationWidget> {
       child: Scaffold(
         body: _pages.elementAt(_selectedIndex),
         bottomNavigationBar: BottomNavigationBar(
+          showUnselectedLabels: false,
           currentIndex: _selectedIndex,
           onTap: _onItemTapped,
           items: const [

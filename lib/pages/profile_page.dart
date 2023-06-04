@@ -18,7 +18,7 @@ class ProfilePage extends StatelessWidget {
     return SlidingUpPanel(
       panel: _buildSettingsSection(context, metamaskController),
       color: bgColor,
-      minHeight: 75,
+      minHeight: 70,
       maxHeight: MediaQuery.of(context).size.height / 2,
       backdropEnabled: true,
       borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),

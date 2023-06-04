@@ -1,6 +1,7 @@
+import 'package:flutter/material.dart';
+import 'package:crypt_io/services/coin_service.dart';
 import 'package:crypt_io/services/swap_service.dart';
 import 'package:crypt_io/widgets/navigation_widget.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'services/metamask_service.dart';
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
   MyApp({super.key, required this.isLoggedIn}) {
     Get.put(MetamaskService());
     Get.put(SwapService());
+    Get.put(CoinService());
   }
 
   @override

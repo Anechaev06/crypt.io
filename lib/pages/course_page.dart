@@ -6,23 +6,27 @@ import 'package:get/get.dart';
 import '../services/coin_service.dart';
 
 class CoursePage extends StatelessWidget {
+  final CoinService controller = Get.find<CoinService>();
+
   CoursePage({super.key});
-  final CoinService controller = Get.put(CoinService());
-  Future<void> _refreshData() async => await controller.fetchCoins();
+
+  Future<void> refreshData() => controller.fetchCoins();
 
   @override
   Widget build(BuildContext context) {
+    double padding = MediaQuery.of(context).size.width * 0.05;
+
     return Padding(
-      padding: const EdgeInsets.all(25),
+      padding: EdgeInsets.all(padding),
       child: RefreshIndicator(
-        onRefresh: _refreshData,
+        onRefresh: refreshData,
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               MarketChanges(controller: controller),
-              const SizedBox(height: 25),
+              SizedBox(height: padding),
               CategoriesWidget(controller: controller),
               _buildCoinList(),
             ],
@@ -35,18 +39,23 @@ class CoursePage extends StatelessWidget {
   Widget _buildCoinList() {
     return GetBuilder<CoinService>(
       builder: (controller) {
-        return ListView.separated(
+        return ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: controller.coinsList.length,
-          separatorBuilder: (context, index) => const Divider(
-            height: 10,
-            thickness: 0.25,
-            color: Colors.grey,
-          ),
-          itemBuilder: (context, index) => CoinWidget(
-            index: index,
-            controller: controller,
+          itemBuilder: (context, index) => Column(
+            children: [
+              CoinWidget(
+                index: index,
+                controller: controller,
+              ),
+              if (index != controller.coinsList.length - 1)
+                const Divider(
+                  height: 10,
+                  thickness: 0.25,
+                  color: Colors.grey,
+                ),
+            ],
           ),
         );
       },
