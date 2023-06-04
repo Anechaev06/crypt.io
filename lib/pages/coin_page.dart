@@ -5,9 +5,9 @@ import '../widgets/favorite_widget.dart';
 
 class CoinPage extends StatelessWidget {
   final int index;
-  final CoinService controller;
+  final CoinService service;
 
-  const CoinPage({super.key, required this.controller, required this.index});
+  const CoinPage({super.key, required this.service, required this.index});
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -17,7 +17,7 @@ class CoinPage extends StatelessWidget {
           elevation: 0,
           centerTitle: true,
           actions: [FavoriteCoinButton(index: index)],
-          title: Text(controller.coinsList[index].symbol.toUpperCase()),
+          title: Text(service.coinsList[index].symbol.toUpperCase()),
         ),
         body: Obx(() {
           return Column(
@@ -31,18 +31,18 @@ class CoinPage extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          "${controller.coinsList[index].symbol.toUpperCase()}1 = ",
+                          "${service.coinsList[index].symbol.toUpperCase()}1 = ",
                           style: Theme.of(context).textTheme.headlineMedium,
                         ),
                         Text(
-                          '\$${controller.coinsList[index].currentPrice.toStringAsFixed(2)}',
+                          '\$${service.coinsList[index].currentPrice.toStringAsFixed(2)}',
                           style: Theme.of(context).textTheme.headlineMedium,
                         ),
                       ],
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      '${controller.coinsList[index].priceChangePercentage24H.toStringAsFixed(2)}%',
+                      '${service.coinsList[index].priceChangePercentage24H.toStringAsFixed(2)}%',
                       // style: TextStyle(color: priceChangeColor),
                     ),
                   ],

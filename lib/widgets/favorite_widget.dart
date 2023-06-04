@@ -10,12 +10,12 @@ class FavoriteCoinWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CoinService>(
-      builder: (controller) {
-        final favoriteCoinIds = controller.favorites;
+      builder: (service) {
+        final favoriteCoinIds = service.favorites;
         if (favoriteCoinIds.isEmpty) {
           return const SizedBox.shrink();
         } else {
-          final favoriteCoinsIndices = controller.coinsList
+          final favoriteCoinsIndices = service.coinsList
               .asMap()
               .entries
               .where((entry) => favoriteCoinIds.contains(entry.value.id))
@@ -33,7 +33,7 @@ class FavoriteCoinWidget extends StatelessWidget {
             ),
             itemBuilder: (context, index) => CoinWidget(
               index: favoriteCoinsIndices[index],
-              controller: controller,
+              service: service,
             ),
           );
         }
@@ -49,9 +49,9 @@ class FavoriteCoinButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CoinService>(
-      builder: (controller) {
-        final String coinId = controller.coinsList[index].id;
-        final isFavorite = controller.favorites.contains(coinId);
+      builder: (service) {
+        final String coinId = service.coinsList[index].id;
+        final isFavorite = service.favorites.contains(coinId);
         return IconButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.transparent,
@@ -65,7 +65,7 @@ class FavoriteCoinButton extends StatelessWidget {
           icon: isFavorite
               ? const Icon(Icons.favorite_rounded)
               : const Icon(Icons.favorite_outline_rounded),
-          onPressed: () => controller.addFavorite(coinId),
+          onPressed: () => service.addFavorite(coinId),
         );
       },
     );

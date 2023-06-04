@@ -23,7 +23,7 @@ class MetamaskService extends GetxController {
   Web3Client get activeClient => _activeClient;
   String? get privateKey => _privateKey;
 
-  // Initializes the controller.
+  // Initializes the service.
   @override
   void onInit() {
     super.onInit();
@@ -33,7 +33,7 @@ class MetamaskService extends GetxController {
     _loadSavedData();
   }
 
-  // Cleans up the controller.
+  // Cleans up the service.
   @override
   void onClose() {
     _ethClient.dispose();
@@ -45,7 +45,9 @@ class MetamaskService extends GetxController {
   void switchNetwork(String network) {
     _activeClient = network == 'eth' ? _ethClient : _bscClient;
     activeNetwork.value = network;
-    _updateBalanceFromBlockchain(userAddress.value);
+    if (userAddress.value.isNotEmpty) {
+      _updateBalanceFromBlockchain(userAddress.value);
+    }
   }
 
   // Toggles the visibility of balance.
@@ -129,12 +131,16 @@ class MetamaskService extends GetxController {
 
   // Fetches the conversion rate from the API.
   Future<double> _getConversionRate(String url) async {
-    final response = await http.get(Uri.parse(url));
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      return data.values.first['usd'];
-    } else {
-      throw Exception('Failed to load conversion rate');
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        return data.values.first['usd'];
+      } else {
+        throw Exception('Failed to load conversion rate');
+      }
+    } catch (e) {
+      throw Exception('Error while fetching conversion rate: $e');
     }
   }
 }

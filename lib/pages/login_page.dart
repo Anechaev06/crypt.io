@@ -53,10 +53,10 @@ class LoginPage extends StatelessWidget {
 
   Future<void> _connectButtonPressed(BuildContext context) async {
     final userAddress = _addressController.text;
-    final MetamaskService metamaskController = Get.find();
+    final MetamaskService metamaskService = Get.find();
 
     try {
-      await metamaskController.loginWithPrivateKey(userAddress);
+      await metamaskService.loginWithPrivateKey(userAddress);
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setBool('isLoggedIn', true);
 

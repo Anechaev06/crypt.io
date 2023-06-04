@@ -10,8 +10,8 @@ class CoursePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final CoinService controller = Get.find<CoinService>();
-    Future<void> refreshData() => controller.fetchCoins();
+    final CoinService coinService = Get.find<CoinService>();
+    Future<void> refreshData() => coinService.fetchCoins();
     double padding = MediaQuery.of(context).size.width * 0.05;
 
     return Padding(
@@ -23,9 +23,9 @@ class CoursePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              MarketChanges(controller: controller),
+              MarketChanges(service: coinService),
               SizedBox(height: padding),
-              CategoriesWidget(controller: controller),
+              CategoriesWidget(service: coinService),
               _buildCoinList(),
             ],
           ),
@@ -36,18 +36,18 @@ class CoursePage extends StatelessWidget {
 
   Widget _buildCoinList() {
     return GetBuilder<CoinService>(
-      builder: (controller) {
+      builder: (service) {
         return ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: controller.coinsList.length,
+          itemCount: service.coinsList.length,
           itemBuilder: (context, index) => Column(
             children: [
               CoinWidget(
                 index: index,
-                controller: controller,
+                service: service,
               ),
-              if (index != controller.coinsList.length - 1)
+              if (index != service.coinsList.length - 1)
                 const Divider(
                   height: 10,
                   thickness: 0.25,

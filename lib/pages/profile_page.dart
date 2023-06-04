@@ -13,10 +13,10 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final metamaskController = Get.find<MetamaskService>();
+    final metamaskService = Get.find<MetamaskService>();
 
     return SlidingUpPanel(
-      panel: _buildSettingsSection(context, metamaskController),
+      panel: _buildSettingsSection(context, metamaskService),
       color: bgColor,
       minHeight: 70,
       maxHeight: MediaQuery.of(context).size.height / 2,
@@ -28,7 +28,7 @@ class ProfilePage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              _buildProfileSection(metamaskController),
+              _buildProfileSection(metamaskService),
               const SizedBox(
                 height: 500,
                 child: FavoriteCoinWidget(),
@@ -40,7 +40,7 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _buildProfileSection(MetamaskService metamaskController) {
+  Widget _buildProfileSection(MetamaskService metamaskService) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -48,23 +48,23 @@ class ProfilePage extends StatelessWidget {
         Obx(
           () {
             return Text(
-              metamaskController.hideBalance.value
+              metamaskService.hideBalance.value
                   ? '***'
-                  : '\$${metamaskController.balance.value}',
+                  : '\$${metamaskService.balance.value}',
               style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             );
           },
         ),
-        _buildElevatedButton(metamaskController),
+        _buildElevatedButton(metamaskService),
       ],
     );
   }
 
-  Widget _buildElevatedButton(MetamaskService metamaskController) {
+  Widget _buildElevatedButton(MetamaskService metamaskService) {
     return ElevatedButton(
       onPressed: () {
         Clipboard.setData(
-            ClipboardData(text: metamaskController.userAddress.value));
+            ClipboardData(text: metamaskService.userAddress.value));
       },
       style: ButtonStyle(
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -74,10 +74,10 @@ class ProfilePage extends StatelessWidget {
         ),
       ),
       child: Obx(() {
-        final userAddress = metamaskController.userAddress.value;
+        final userAddress = metamaskService.userAddress.value;
         return Text(
           userAddress.isEmpty
-              ? ""
+              ? "No Address"
               : "${userAddress.substring(0, 6)}...${userAddress.substring(userAddress.length - 4)}",
         );
       }),
@@ -85,7 +85,7 @@ class ProfilePage extends StatelessWidget {
   }
 
   Widget _buildSettingsSection(
-      BuildContext context, MetamaskService metamaskController) {
+      BuildContext context, MetamaskService metamaskService) {
     return Padding(
       padding: const EdgeInsets.only(left: 30, right: 30),
       child: Column(
@@ -105,19 +105,19 @@ class ProfilePage extends StatelessWidget {
             "Settings",
             style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
           ),
-          _buildHideBalance(context, metamaskController),
+          _buildHideBalance(context, metamaskService),
           const Divider(height: 5, thickness: 0.25, color: Colors.grey),
-          _buildNetwork(context, metamaskController),
+          _buildNetwork(context, metamaskService),
           const Divider(height: 5, thickness: 0.25, color: Colors.grey),
-          _buildPushNotifications(context, metamaskController),
-          _buildLogoutButton(context, metamaskController),
+          _buildPushNotifications(context, metamaskService),
+          _buildLogoutButton(context, metamaskService),
         ],
       ),
     );
   }
 
   Widget _buildHideBalance(
-      BuildContext context, MetamaskService metamaskController) {
+      BuildContext context, MetamaskService metamaskService) {
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Obx(
@@ -126,9 +126,9 @@ class ProfilePage extends StatelessWidget {
           children: [
             const Text("Hide Balance", style: TextStyle(fontSize: 20)),
             Switch(
-              value: metamaskController.hideBalance.value,
+              value: metamaskService.hideBalance.value,
               onChanged: (value) {
-                metamaskController.hideBalance.value = value;
+                metamaskService.hideBalance.value = value;
               },
             ),
           ],
@@ -137,8 +137,7 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _buildNetwork(
-      BuildContext context, MetamaskService metamaskController) {
+  Widget _buildNetwork(BuildContext context, MetamaskService metamaskService) {
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Row(
@@ -150,7 +149,7 @@ class ProfilePage extends StatelessWidget {
           ),
           Obx(
             () => DropdownButton<String>(
-              value: metamaskController.activeNetwork.value,
+              value: metamaskService.activeNetwork.value,
               items: <String>['eth', 'bsc'].map((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
@@ -159,7 +158,7 @@ class ProfilePage extends StatelessWidget {
               }).toList(),
               onChanged: (newValue) {
                 if (newValue != null) {
-                  metamaskController.switchNetwork(newValue);
+                  metamaskService.switchNetwork(newValue);
                 }
               },
             ),
@@ -170,7 +169,7 @@ class ProfilePage extends StatelessWidget {
   }
 
   Widget _buildPushNotifications(
-      BuildContext context, MetamaskService metamaskController) {
+      BuildContext context, MetamaskService metamaskService) {
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Obx(
@@ -179,9 +178,9 @@ class ProfilePage extends StatelessWidget {
           children: [
             const Text("Push Notifications", style: TextStyle(fontSize: 20)),
             Switch(
-                value: metamaskController.isNotificationEnabled.value,
+                value: metamaskService.isNotificationEnabled.value,
                 onChanged: (value) =>
-                    metamaskController.isNotificationEnabled.value = value),
+                    metamaskService.isNotificationEnabled.value = value),
           ],
         ),
       ),
@@ -189,12 +188,12 @@ class ProfilePage extends StatelessWidget {
   }
 
   Widget _buildLogoutButton(
-      BuildContext context, MetamaskService metamaskController) {
+      BuildContext context, MetamaskService metamaskService) {
     return Padding(
       padding: const EdgeInsets.all(20),
       child: OutlinedButton(
         onPressed: () async {
-          metamaskController.logout();
+          metamaskService.logout();
 
           SharedPreferences prefs = await SharedPreferences.getInstance();
           prefs.setBool('isLoggedIn', false);

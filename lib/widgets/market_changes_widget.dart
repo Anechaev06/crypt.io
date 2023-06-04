@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class MarketChanges extends StatelessWidget {
-  final CoinService controller;
+  final CoinService service;
 
-  const MarketChanges({super.key, required this.controller});
+  const MarketChanges({super.key, required this.service});
 
   @override
   Widget build(BuildContext context) {
     return Obx(
       () {
-        final marketChanges = controller.marketChanges24H();
+        final marketChanges = service.marketChanges24H();
 
         final marketChangesText = marketChanges > 0
             ? 'Market is up'

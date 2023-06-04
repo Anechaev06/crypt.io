@@ -11,39 +11,44 @@ class SwapPage extends StatefulWidget {
 }
 
 class _SwapPageState extends State<SwapPage> {
-  static const tokens = ['ETH', 'USDT'];
-  String? dropdownValue1;
-  String? dropdownValue2;
-  String amount1 = '';
-  String amount2 = '';
+  static const List<String> tokenOptions = ['ETH', 'USDT'];
+  String selectedToken1 = tokenOptions[0];
+  String selectedToken2 = tokenOptions[1];
+  String token1Amount = '';
+  String token2Amount = '';
 
-  final SwapService _swapController = Get.find<SwapService>();
+  final SwapService swapServiceInstance = Get.find<SwapService>();
 
-  void swapTokens() async {
+  Future<void> dropdownSwap() async {
     try {
-      final tempToken = dropdownValue1;
-      dropdownValue1 = dropdownValue2;
-      dropdownValue2 = tempToken;
+      setState(() {
+        final tempToken = selectedToken1;
+        selectedToken1 = selectedToken2;
+        selectedToken2 = tempToken;
 
-      final tempAmount = amount1;
-      amount1 = amount2;
-      amount2 = tempAmount;
+        final tempAmount = token1Amount;
+        token1Amount = token2Amount;
+        token2Amount = tempAmount;
+      });
 
-      String? privateKey = MetamaskService().privateKey;
-      String tokenInAddress = dropdownValue1!;
-      String tokenOutAddress = dropdownValue2!;
-      BigInt amountIn = BigInt.from(double.parse(amount1));
-      BigInt minAmountOut = BigInt.from(double.parse(amount2));
+      String? userPrivateKey = MetamaskService().privateKey;
+      String tokenInAddress = selectedToken1;
+      String tokenOutAddress = selectedToken2;
+      BigInt amountIn = BigInt.parse(token1Amount);
+      BigInt minAmountOut = BigInt.parse(token2Amount);
 
-      await _swapController.swapTokens(
-          privateKey!, tokenInAddress, tokenOutAddress, amountIn, minAmountOut);
+      await swapServiceInstance.swapTokens(userPrivateKey!, tokenInAddress,
+          tokenOutAddress, amountIn, minAmountOut);
     } catch (e) {
       // Handle the error
       // print(e);
     }
   }
 
-  Container buildDropdown(String? value, ValueChanged<String?> onChanged) {
+  Container buildTokenDropdown(String selectedToken, String otherToken,
+      ValueChanged<String?> onTokenSelected) {
+    var availableTokens =
+        tokenOptions.where((token) => token != otherToken).toList();
     return Container(
       padding: const EdgeInsets.all(8),
       height: 50,
@@ -54,54 +59,24 @@ class _SwapPageState extends State<SwapPage> {
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
-          value: value,
+          value: selectedToken,
           alignment: Alignment.center,
           hint: const Text('Select'),
-          onChanged: onChanged,
-          items: tokens
+          onChanged: onTokenSelected,
+          items: availableTokens
               .map(
-                  (value) => DropdownMenuItem(value: value, child: Text(value)))
+                  (token) => DropdownMenuItem(value: token, child: Text(token)))
               .toList(),
         ),
       ),
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          buildTokenField(
-              dropdownValue1, (val) => setState(() => amount1 = val),
-              (newValue) {
-            if (newValue != null) setState(() => dropdownValue1 = newValue);
-          }),
-          OutlinedButton(
-            onPressed: swapTokens,
-            child: const Icon(Icons.swap_vert_rounded),
-          ),
-          buildTokenField(
-              dropdownValue2, (val) => setState(() => amount2 = val),
-              (newValue) {
-            if (newValue != null) setState(() => dropdownValue2 = newValue);
-          }),
-          const SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: swapTokens,
-            child: const Text('Swap'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Container buildTokenField(
-    String? dropdownValue,
+  Container buildTokenAmountInputField(
+    String selectedToken,
+    String otherSelectedToken,
     ValueChanged<String> onAmountChanged,
-    ValueChanged<String?> onDropdownChanged,
+    ValueChanged<String?> onTokenSelected,
   ) {
     return Container(
       decoration: BoxDecoration(
@@ -122,9 +97,45 @@ class _SwapPageState extends State<SwapPage> {
                 ),
               ),
             ),
-            buildDropdown(dropdownValue, onDropdownChanged),
+            buildTokenDropdown(
+                selectedToken, otherSelectedToken, onTokenSelected),
           ],
         ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // final swap_service = Get.find<SwapService>();
+
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          // 1 Amount Field
+          buildTokenAmountInputField(selectedToken1, selectedToken2,
+              (val) => setState(() => token1Amount = val), (newValue) {
+            if (newValue != null) setState(() => selectedToken1 = newValue);
+          }),
+          // Dropdown button Swap
+          OutlinedButton(
+            onPressed: dropdownSwap,
+            child: const Icon(Icons.swap_vert_rounded),
+          ),
+          // 2 Amount Field
+          buildTokenAmountInputField(selectedToken2, selectedToken1,
+              (val) => setState(() => token2Amount = val), (newValue) {
+            if (newValue != null) setState(() => selectedToken2 = newValue);
+          }),
+          const SizedBox(height: 20),
+          // Swap Button
+          ElevatedButton(
+            onPressed: () {},
+            child: const Text('Swap'),
+          ),
+        ],
       ),
     );
   }

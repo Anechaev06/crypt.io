@@ -3,8 +3,8 @@ import '../constants/colors.dart';
 import '../services/coin_service.dart';
 
 class CategoriesWidget extends StatefulWidget {
-  final CoinService controller;
-  const CategoriesWidget({super.key, required this.controller});
+  final CoinService service;
+  const CategoriesWidget({super.key, required this.service});
 
   @override
   State<CategoriesWidget> createState() => _CategoriesWidgetState();
@@ -16,7 +16,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
   @override
   void initState() {
     super.initState();
-    widget.controller.sortCoins(_selectedSortType);
+    widget.service.sortCoins(_selectedSortType);
   }
 
   @override
@@ -72,6 +72,6 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
 
   void _updateSortType(CoinSortType type) {
     setState(() => _selectedSortType = type);
-    widget.controller.sortCoins(type);
+    widget.service.sortCoins(type);
   }
 }

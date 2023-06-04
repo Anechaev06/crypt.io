@@ -39,11 +39,7 @@ class MyApp extends StatelessWidget {
       title: 'Crypt.io',
       theme: AppTheme.darkTheme,
       debugShowCheckedModeBanner: false,
-      home: _getInitialScreen(),
+      home: isLoggedIn ? const NavigationWidget() : LoginPage(),
     );
-  }
-
-  Widget _getInitialScreen() {
-    return isLoggedIn ? const NavigationWidget() : LoginPage();
   }
 }

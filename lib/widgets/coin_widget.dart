@@ -4,17 +4,17 @@ import '../pages/coin_page.dart';
 
 class CoinWidget extends StatelessWidget {
   final int index;
-  final CoinService controller;
+  final CoinService service;
 
   const CoinWidget({
     super.key,
-    required this.controller,
+    required this.service,
     required this.index,
   });
 
   @override
   Widget build(BuildContext context) {
-    final coin = controller.coinsList[index];
+    final coin = service.coinsList[index];
     final coinPrice = coin.currentPrice;
     final coinPriceChange = coin.priceChangePercentage24H;
     final coinChangesColor = coinPriceChange > 0
@@ -30,7 +30,7 @@ class CoinWidget extends StatelessWidget {
           MaterialPageRoute(
             builder: (context) => CoinPage(
               index: index,
-              controller: controller,
+              service: service,
             ),
           ),
         );
@@ -55,7 +55,7 @@ class CoinWidget extends StatelessWidget {
                 const SizedBox(width: 10),
                 // Coin Symbol
                 Text(
-                  controller.coinsList[index].symbol.toUpperCase(),
+                  service.coinsList[index].symbol.toUpperCase(),
                   style: Theme.of(context)
                       .textTheme
                       .titleMedium
