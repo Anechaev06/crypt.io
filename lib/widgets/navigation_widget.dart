@@ -14,7 +14,7 @@ class _NavigationWidgetState extends State<NavigationWidget> {
   int _selectedIndex = 0;
 
   static final List<Widget> _pages = [
-    CoursePage(),
+    const CoursePage(),
     const SwapPage(),
     const ProfilePage(),
   ];

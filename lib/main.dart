@@ -1,27 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:crypt_io/services/coin_service.dart';
-import 'package:crypt_io/services/swap_service.dart';
-import 'package:crypt_io/widgets/navigation_widget.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'services/metamask_service.dart';
-import 'pages/login_page.dart';
-import 'themes/theme.dart';
+
+import 'package:crypt_io/services/coin_service.dart';
+import 'package:crypt_io/services/metamask_service.dart';
+import 'package:crypt_io/services/swap_service.dart';
+import 'package:crypt_io/widgets/navigation_widget.dart';
+import 'package:crypt_io/pages/login_page.dart';
+import 'package:crypt_io/themes/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+  final isLoggedIn = await _isLoggedIn();
   runApp(MyApp(isLoggedIn: isLoggedIn));
+}
+
+Future<bool> _isLoggedIn() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getBool('isLoggedIn') ?? false;
 }
 
 class MyApp extends StatelessWidget {
   final bool isLoggedIn;
 
   MyApp({super.key, required this.isLoggedIn}) {
-    Get.put(MetamaskService());
-    Get.put(SwapService());
-    Get.put(CoinService());
+    _initServices();
+  }
+
+  void _initServices() {
+    Get.lazyPut(() => MetamaskService());
+    Get.lazyPut(() => SwapService());
+    Get.lazyPut(() => CoinService());
   }
 
   @override
@@ -30,7 +39,11 @@ class MyApp extends StatelessWidget {
       title: 'Crypt.io',
       theme: AppTheme.darkTheme,
       debugShowCheckedModeBanner: false,
-      home: isLoggedIn ? const NavigationWidget() : LoginPage(),
+      home: _getInitialScreen(),
     );
+  }
+
+  Widget _getInitialScreen() {
+    return isLoggedIn ? const NavigationWidget() : LoginPage();
   }
 }

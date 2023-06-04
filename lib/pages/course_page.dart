@@ -6,14 +6,12 @@ import 'package:get/get.dart';
 import '../services/coin_service.dart';
 
 class CoursePage extends StatelessWidget {
-  final CoinService controller = Get.find<CoinService>();
-
-  CoursePage({super.key});
-
-  Future<void> refreshData() => controller.fetchCoins();
+  const CoursePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final CoinService controller = Get.find<CoinService>();
+    Future<void> refreshData() => controller.fetchCoins();
     double padding = MediaQuery.of(context).size.width * 0.05;
 
     return Padding(
