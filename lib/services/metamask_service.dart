@@ -45,9 +45,7 @@ class MetamaskService extends GetxController {
   void switchNetwork(String network) {
     _activeClient = network == 'eth' ? _ethClient : _bscClient;
     activeNetwork.value = network;
-    if (userAddress.value.isNotEmpty) {
-      _updateBalanceFromBlockchain(userAddress.value);
-    }
+    _updateBalanceFromBlockchain(userAddress.value);
   }
 
   // Toggles the visibility of balance.
@@ -68,7 +66,7 @@ class MetamaskService extends GetxController {
     try {
       _privateKey = privateKeyInput;
       final credentials = EthPrivateKey.fromHex(privateKeyInput);
-      final address = credentials.address;
+      final address = await credentials.address; // Add await here
       updateUserAddress(address.hex);
     } catch (e) {
       throw Exception('Error while logging in with private key: $e');

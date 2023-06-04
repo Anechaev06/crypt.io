@@ -10,7 +10,7 @@ class CoursePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final CoinService coinService = Get.find<CoinService>();
+    final coinService = Get.find<CoinService>();
     Future<void> refreshData() => coinService.fetchCoins();
     double padding = MediaQuery.of(context).size.width * 0.05;
 

@@ -77,7 +77,7 @@ class ProfilePage extends StatelessWidget {
         final userAddress = metamaskService.userAddress.value;
         return Text(
           userAddress.isEmpty
-              ? "No Address"
+              ? ""
               : "${userAddress.substring(0, 6)}...${userAddress.substring(userAddress.length - 4)}",
         );
       }),
