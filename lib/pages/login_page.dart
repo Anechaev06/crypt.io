@@ -6,7 +6,6 @@ import '../widgets/navigation_widget.dart';
 
 class LoginPage extends StatelessWidget {
   final TextEditingController _addressController = TextEditingController();
-  final double _borderRadius = 10.0;
 
   LoginPage({super.key});
 
@@ -14,73 +13,87 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextField(
-              controller: _addressController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(_borderRadius),
-                ),
-                labelText: 'Enter your private key',
-                labelStyle: TextStyle(
-                    fontWeight: FontWeight.bold, color: Colors.grey[600]!),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.orange),
-                  borderRadius: BorderRadius.circular(_borderRadius),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey[400]!),
-                  borderRadius: BorderRadius.circular(_borderRadius),
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.red),
-                  borderRadius: BorderRadius.circular(_borderRadius),
-                ),
-                errorStyle: const TextStyle(color: Colors.red),
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () => _connectButtonPressed(context),
-              child: const Text('Connect'),
-            ),
-          ],
+        child: _buildBody(context),
+      ),
+    );
+  }
+
+  Widget _buildBody(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        _buildAddressTextField(),
+        ElevatedButton(
+          onPressed: () => _connectButtonPressed(context),
+          child: const Text('Connect'),
         ),
+      ],
+    );
+  }
+
+  TextField _buildAddressTextField() {
+    return TextField(
+      controller: _addressController,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        labelText: 'Enter your private key',
+        labelStyle:
+            TextStyle(fontWeight: FontWeight.bold, color: Colors.grey[600]!),
+        focusedBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Colors.orange),
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.grey[400]!),
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Colors.red),
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        errorStyle: const TextStyle(color: Colors.red),
       ),
     );
   }
 
   Future<void> _connectButtonPressed(BuildContext context) async {
     final privateKey = _addressController.text;
-    final metamaskService = Get.find<MetamaskService>();
+    final MetamaskService metamaskService = Get.find();
 
     try {
-      await metamaskService.loginWithPrivateKey(privateKey);
-
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setBool('isLoggedIn', true);
-
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const NavigationWidget(),
-        ),
-      );
+      metamaskService.loginWithPrivateKey(privateKey);
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoggedIn', true);
+      _navigateToHome(context);
     } catch (e) {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('Error'),
-          content: Text('Failed to connect: $e'),
-          actions: [
-            ElevatedButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('OK'),
-            ),
-          ],
-        ),
-      );
+      _showErrorDialog(context, e.toString());
     }
+  }
+
+  void _navigateToHome(BuildContext context) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const NavigationWidget(),
+      ),
+    );
+  }
+
+  void _showErrorDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Error'),
+        content: Text('Failed to connect: $message'),
+        actions: [
+          ElevatedButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
   }
 }

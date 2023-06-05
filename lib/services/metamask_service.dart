@@ -41,6 +41,35 @@ class MetamaskService extends GetxController {
     super.onClose();
   }
 
+  // Logs in a user with a private key.
+  Future<void> loginWithPrivateKey(String privateKeyInput) async {
+    try {
+      _privateKey = privateKeyInput;
+      final credentials = EthPrivateKey.fromHex(privateKeyInput);
+      final address = credentials.address;
+      updateUserAddress(address.hex);
+    } catch (e) {
+      throw Exception('Error while logging in with private key: $e');
+    }
+  }
+
+  // Fetches balance from the blockchain and updates it.
+  Future<void> _updateBalanceFromBlockchain(String address) async {
+    try {
+      EthereumAddress ethereumAddress = EthereumAddress.fromHex(address);
+      EtherAmount etherAmount = await _activeClient.getBalance(ethereumAddress);
+      String rawBalance =
+          etherAmount.getValueInUnit(EtherUnit.ether).toString();
+
+      double usdBalance = await _convertToUSD(rawBalance);
+      balance.value = usdBalance.toStringAsFixed(2);
+
+      _saveData();
+    } catch (e) {
+      throw Exception('Error while fetching balance: $e');
+    }
+  }
+
   // Switches between Ethereum and BSC networks.
   void switchNetwork(String network) {
     _activeClient = network == 'eth' ? _ethClient : _bscClient;
@@ -61,36 +90,6 @@ class MetamaskService extends GetxController {
     _updateBalanceFromBlockchain(userAddress.value);
   }
 
-  // Logs in a user with a private key.
-  Future<void> loginWithPrivateKey(String privateKeyInput) async {
-    try {
-      _privateKey = privateKeyInput;
-      final credentials = EthPrivateKey.fromHex(privateKeyInput);
-      final address = await credentials.address; // Add await here
-      updateUserAddress(address.hex);
-    } catch (e) {
-      throw Exception('Error while logging in with private key: $e');
-    }
-  }
-
-  // Clears the privateKey when a user logs out
-  void logout() {
-    updateUserAddress('');
-    balance.value = '0';
-    switchNetwork('eth');
-    toggleHideBalance(false);
-    _privateKey = null;
-  }
-
-  // Loads user data from local storage.
-  Future<void> _loadSavedData() async {
-    final prefs = await SharedPreferences.getInstance();
-    userAddress.value = prefs.getString('userAddress') ?? '';
-    balance.value = prefs.getString('balance') ?? '0';
-    activeNetwork.value = prefs.getString('activeNetwork') ?? 'eth';
-    hideBalance.value = prefs.getBool('hideBalance') ?? false;
-  }
-
   // Saves user data to local storage.
   Future<void> _saveData() async {
     final prefs = await SharedPreferences.getInstance();
@@ -100,21 +99,13 @@ class MetamaskService extends GetxController {
     prefs.setBool('hideBalance', hideBalance.value);
   }
 
-  // Fetches balance from the blockchain and updates it.
-  Future<void> _updateBalanceFromBlockchain(String address) async {
-    try {
-      EthereumAddress ethereumAddress = EthereumAddress.fromHex(address);
-      EtherAmount etherAmount = await _activeClient.getBalance(ethereumAddress);
-      String rawBalance =
-          etherAmount.getValueInUnit(EtherUnit.ether).toString();
-
-      double usdBalance = await _convertToUSD(rawBalance);
-      balance.value = usdBalance.toStringAsFixed(2);
-
-      _saveData();
-    } catch (e) {
-      throw Exception('Error while fetching balance: $e');
-    }
+  // Loads user data from local storage.
+  Future<void> _loadSavedData() async {
+    final prefs = await SharedPreferences.getInstance();
+    userAddress.value = prefs.getString('userAddress')!;
+    balance.value = prefs.getString('balance')!;
+    activeNetwork.value = prefs.getString('activeNetwork')!;
+    hideBalance.value = prefs.getBool('hideBalance')!;
   }
 
   // Fetches the conversion rate from the API and converts the balance to USD.
@@ -140,5 +131,14 @@ class MetamaskService extends GetxController {
     } catch (e) {
       throw Exception('Error while fetching conversion rate: $e');
     }
+  }
+
+  // Clears the privateKey when a user logs out
+  void logout() {
+    updateUserAddress('');
+    balance.value = '0';
+    switchNetwork('eth');
+    toggleHideBalance(false);
+    _privateKey = null;
   }
 }

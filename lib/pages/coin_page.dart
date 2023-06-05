@@ -48,61 +48,24 @@ class CoinPage extends StatelessWidget {
                   ],
                 ),
               ),
-              // Chart
-
-              const SizedBox(height: 600),
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    // Chat gpt swap button here !!!
-                    ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        // backgroundColor: Colors.blueGrey,
-                        minimumSize: const Size(100, 50),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                      ),
-                      child: const Text("Swap"),
-                    ),
-                    Row(
-                      // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            minimumSize: const Size(125, 50),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                          ),
-                          child: const Text("Buy"),
-                        ),
-                        const SizedBox(width: 10),
-                        ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.red[500],
-                            minimumSize: const Size(125, 50),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                          ),
-                          child: const Text("Sell"),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              )
+              // Coin Chart
+              CoinChart(service: service, index: index),
             ],
           );
         }),
       ),
     );
+  }
+}
+
+class CoinChart extends StatelessWidget {
+  final CoinService service;
+  final int index;
+
+  const CoinChart({super.key, required this.service, required this.index});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }
