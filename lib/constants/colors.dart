@@ -1,6 +1,7 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
+
+// 0xAARRGGBB
 
 const newPrimaryColor = Color(0xffEA603F);
 const bgColor = Color(0xff171717);

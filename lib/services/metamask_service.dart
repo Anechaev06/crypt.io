@@ -54,7 +54,7 @@ class MetamaskService extends GetxController {
   }
 
   // Fetches balance from the blockchain and updates it.
-  Future<void> _updateBalanceFromBlockchain(String address) async {
+  Future<void> updateBalanceFromBlockchain(String address) async {
     try {
       EthereumAddress ethereumAddress = EthereumAddress.fromHex(address);
       EtherAmount etherAmount = await _activeClient.getBalance(ethereumAddress);
@@ -74,7 +74,7 @@ class MetamaskService extends GetxController {
   void switchNetwork(String network) {
     _activeClient = network == 'eth' ? _ethClient : _bscClient;
     activeNetwork.value = network;
-    _updateBalanceFromBlockchain(userAddress.value);
+    updateBalanceFromBlockchain(userAddress.value);
   }
 
   // Toggles the visibility of balance.
@@ -87,7 +87,7 @@ class MetamaskService extends GetxController {
   void updateUserAddress(String newAddress) {
     userAddress.value = newAddress;
     _saveData();
-    _updateBalanceFromBlockchain(userAddress.value);
+    updateBalanceFromBlockchain(userAddress.value);
   }
 
   // Saves user data to local storage.

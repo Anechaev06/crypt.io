@@ -1,4 +1,5 @@
 import 'package:crypt_io/models/coin_model.dart';
+import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -80,5 +81,35 @@ class CoinService extends GetxController {
         : 0.0;
 
     return (bitcoin + ethereum) / 2;
+  }
+
+  Future<Map<String, List<double>>> fetchCoinChartData(
+      String coinId, String interval) async {
+    final endpoint = _getIntervalEndpoint(interval);
+    final url =
+        'https://api.coingecko.com/api/v3/coins/$coinId/market_chart?vs_currency=usd&days=$interval&interval=$endpoint';
+    final response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      final jsonResponse = jsonDecode(response.body);
+      return {
+        'prices': jsonResponse['prices']
+            .map((price) => price[1])
+            .toList()
+            .cast<double>()
+      };
+    } else {
+      throw Exception('Failed to load coin chart data');
+    }
+  }
+
+  String? _getIntervalEndpoint(String interval) {
+    const intervalEndpoints = {
+      '24h': 'daily',
+      '7d': 'daily',
+      '30d': 'daily',
+      '1y': 'daily'
+    };
+    return intervalEndpoints[interval];
   }
 }

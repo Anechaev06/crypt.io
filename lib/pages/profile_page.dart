@@ -22,18 +22,27 @@ class ProfilePage extends StatelessWidget {
       maxHeight: MediaQuery.of(context).size.height / 2,
       backdropEnabled: true,
       borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-      body: Padding(
-        padding: const EdgeInsets.all(25),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              _buildProfileSection(metamaskService),
-              const SizedBox(
-                height: 500,
-                child: FavoriteCoinWidget(),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await metamaskService
+              .updateBalanceFromBlockchain(metamaskService.userAddress.value);
+        },
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.all(25),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  _buildProfileSection(metamaskService),
+                  const SizedBox(
+                    height: 500,
+                    child: FavoriteCoinWidget(),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),

@@ -28,10 +28,7 @@ class CoinWidget extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => CoinPage(
-              index: index,
-              service: service,
-            ),
+            builder: (context) => CoinPage(index: index),
           ),
         );
       },
@@ -41,7 +38,7 @@ class CoinWidget extends StatelessWidget {
         elevation: 0,
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
+        padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 5.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

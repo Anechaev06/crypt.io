@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../services/coin_service.dart';
+import '../widgets/coin_chart_widget.dart';
 import '../widgets/favorite_widget.dart';
 
 class CoinPage extends StatelessWidget {
   final int index;
-  final CoinService service;
 
-  const CoinPage({super.key, required this.service, required this.index});
+  const CoinPage({super.key, required this.index});
   @override
   Widget build(BuildContext context) {
+    final coinService = Get.find<CoinService>();
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -17,7 +18,7 @@ class CoinPage extends StatelessWidget {
           elevation: 0,
           centerTitle: true,
           actions: [FavoriteCoinButton(index: index)],
-          title: Text(service.coinsList[index].symbol.toUpperCase()),
+          title: Text(coinService.coinsList[index].symbol.toUpperCase()),
         ),
         body: Obx(() {
           return Column(
@@ -31,41 +32,32 @@ class CoinPage extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          "${service.coinsList[index].symbol.toUpperCase()}1 = ",
+                          "${coinService.coinsList[index].symbol.toUpperCase()}1 = ",
                           style: Theme.of(context).textTheme.headlineMedium,
                         ),
                         Text(
-                          '\$${service.coinsList[index].currentPrice.toStringAsFixed(2)}',
+                          '\$${coinService.coinsList[index].currentPrice.toStringAsFixed(2)}',
                           style: Theme.of(context).textTheme.headlineMedium,
                         ),
                       ],
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      '${service.coinsList[index].priceChangePercentage24H.toStringAsFixed(2)}%',
+                      '${coinService.coinsList[index].priceChangePercentage24H.toStringAsFixed(2)}%',
                       // style: TextStyle(color: priceChangeColor),
                     ),
                   ],
                 ),
               ),
+
+              const SizedBox(height: 125),
+
               // Coin Chart
-              CoinChart(service: service, index: index),
+              CoinChart(service: coinService, index: index),
             ],
           );
         }),
       ),
     );
-  }
-}
-
-class CoinChart extends StatelessWidget {
-  final CoinService service;
-  final int index;
-
-  const CoinChart({super.key, required this.service, required this.index});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }
