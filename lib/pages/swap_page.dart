@@ -91,9 +91,12 @@ class _SwapPageState extends State<SwapPage> {
               child: TextField(
                 onChanged: onAmountChanged,
                 keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   border: InputBorder.none,
                   labelText: 'Amount',
+                  labelStyle: TextStyle(
+                    color: Colors.grey.withOpacity(0.3),
+                  ),
                 ),
               ),
             ),

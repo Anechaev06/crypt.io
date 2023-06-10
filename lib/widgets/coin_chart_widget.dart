@@ -51,7 +51,7 @@ class _CoinChartState extends State<CoinChart> {
           return Column(
             children: [
               AspectRatio(
-                aspectRatio: 1.23,
+                aspectRatio: 2,
                 child: LineChart(
                   LineChartData(
                     lineTouchData: LineTouchData(
@@ -76,8 +76,8 @@ class _CoinChartState extends State<CoinChart> {
                         dotData: FlDotData(show: false),
                         color: newPrimaryColor,
                         belowBarData: BarAreaData(
-                          show: true,
-                          color: newPrimaryColor.withOpacity(0.1),
+                          show: false,
+                          // color: newPrimaryColor.withOpacity(0.1),
                         ),
                       ),
                     ],
@@ -86,6 +86,7 @@ class _CoinChartState extends State<CoinChart> {
                   swapAnimationCurve: Curves.linear,
                 ),
               ),
+              const SizedBox(height: 50),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
