@@ -57,6 +57,16 @@ class _CoinChartState extends State<CoinChart> {
                     lineTouchData: LineTouchData(
                       touchTooltipData: LineTouchTooltipData(
                         tooltipBgColor: Colors.transparent,
+                        getTooltipItems: (touchedSpots) {
+                          return touchedSpots.map((barSpot) {
+                            return LineTooltipItem(
+                              barSpot.y.toStringAsFixed(2),
+                              const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            );
+                          }).toList();
+                        },
                       ),
                     ),
                     gridData: FlGridData(show: false),
@@ -86,15 +96,17 @@ class _CoinChartState extends State<CoinChart> {
                   swapAnimationCurve: Curves.linear,
                 ),
               ),
-              const SizedBox(height: 50),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _buildButton('24h', '1D'),
-                  _buildButton('7d', '7D'),
-                  _buildButton('30d', '1M'),
-                  _buildButton('1y', '1Y'),
-                ],
+              Padding(
+                padding: const EdgeInsets.all(50),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    _buildButton('24h', '1D'),
+                    _buildButton('7d', '7D'),
+                    _buildButton('30d', '1M'),
+                    _buildButton('1y', '1Y'),
+                  ],
+                ),
               )
             ],
           );
