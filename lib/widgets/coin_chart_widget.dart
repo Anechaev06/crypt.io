@@ -16,11 +16,8 @@ class CoinChart extends StatefulWidget {
 class _CoinChartState extends State<CoinChart> {
   String _selectedInterval = '24h';
 
-  void _onPeriodChange(String interval) {
-    setState(() {
-      _selectedInterval = interval;
-    });
-  }
+  void _onPeriodChange(String interval) =>
+      setState(() => _selectedInterval = interval);
 
   Widget _buildButton(String interval, String label) {
     final bool isSelected = _selectedInterval == interval;
@@ -50,54 +47,62 @@ class _CoinChartState extends State<CoinChart> {
         if (snapshot.hasData) {
           return Column(
             children: [
-              AspectRatio(
-                aspectRatio: 2,
-                child: LineChart(
-                  LineChartData(
-                    lineTouchData: LineTouchData(
-                      touchTooltipData: LineTouchTooltipData(
-                        tooltipBgColor: Colors.transparent,
-                        getTooltipItems: (touchedSpots) {
-                          return touchedSpots.map((barSpot) {
-                            return LineTooltipItem(
-                              barSpot.y.toStringAsFixed(2),
-                              const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            );
-                          }).toList();
-                        },
-                      ),
-                    ),
-                    gridData: FlGridData(show: false),
-                    titlesData: FlTitlesData(show: false),
-                    borderData: FlBorderData(show: false),
-                    lineBarsData: [
-                      LineChartBarData(
-                        spots: snapshot.data!['prices']
-                            ?.asMap()
-                            .entries
-                            .map((entry) =>
-                                FlSpot(entry.key.toDouble(), entry.value))
-                            .toList(),
-                        isCurved: true,
-                        barWidth: 3,
-                        isStrokeCapRound: true,
-                        dotData: FlDotData(show: false),
-                        color: newPrimaryColor,
-                        belowBarData: BarAreaData(
-                          show: false,
-                          // color: newPrimaryColor.withOpacity(0.1),
+              SizedBox(
+                width: 350,
+                child: AspectRatio(
+                  aspectRatio: 1,
+                  child: LineChart(
+                    LineChartData(
+                      lineTouchData: LineTouchData(
+                        touchTooltipData: LineTouchTooltipData(
+                          tooltipBgColor: Colors.transparent,
+                          getTooltipItems: (touchedSpots) {
+                            return touchedSpots.map((barSpot) {
+                              return LineTooltipItem(
+                                barSpot.y.toStringAsFixed(2),
+                                const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              );
+                            }).toList();
+                          },
                         ),
                       ),
-                    ],
+                      gridData: FlGridData(show: false),
+                      titlesData: FlTitlesData(
+                        show: true,
+                        bottomTitles: AxisTitles(
+                            sideTitles: SideTitles(showTitles: true)),
+                        topTitles: AxisTitles(
+                            sideTitles: SideTitles(showTitles: false)),
+                        leftTitles: AxisTitles(
+                            sideTitles: SideTitles(showTitles: false)),
+                        rightTitles: AxisTitles(
+                            sideTitles: SideTitles(showTitles: false)),
+                      ),
+                      borderData: FlBorderData(show: false),
+                      lineBarsData: [
+                        LineChartBarData(
+                          spots: snapshot.data!['prices']
+                              ?.asMap()
+                              .entries
+                              .map((entry) =>
+                                  FlSpot(entry.key.toDouble(), entry.value))
+                              .toList(),
+                          barWidth: 3,
+                          dotData: FlDotData(show: false),
+                          belowBarData: BarAreaData(show: false),
+                          color: newPrimaryColor,
+                        ),
+                      ],
+                    ),
+                    swapAnimationDuration: const Duration(milliseconds: 150),
+                    swapAnimationCurve: Curves.linear,
                   ),
-                  swapAnimationDuration: const Duration(milliseconds: 150),
-                  swapAnimationCurve: Curves.linear,
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(50),
+                padding: const EdgeInsets.all(40),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [

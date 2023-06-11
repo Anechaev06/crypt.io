@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:local_auth/local_auth.dart';
 import 'package:crypt_io/services/coin_service.dart';
 import 'package:crypt_io/services/metamask_service.dart';
 import 'package:crypt_io/services/swap_service.dart';
@@ -17,13 +17,29 @@ void main() async {
 
 Future<bool> _isLoggedIn() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  return prefs.getBool('isLoggedIn') ?? false;
+  bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+  bool isFirstLogin = prefs.getBool('isFirstLogin') ?? true;
+
+  if (isLoggedIn) {
+    if (isFirstLogin) {
+      await prefs.setBool('isFirstLogin', false);
+      return true;
+    } else {
+      final localAuth = LocalAuthentication();
+      bool didAuthenticate = await localAuth.authenticate(
+        localizedReason: 'Please authenticate to open the app',
+      );
+      return didAuthenticate;
+    }
+  } else {
+    return false;
+  }
 }
 
 class MyApp extends StatelessWidget {
   final bool isLoggedIn;
 
-  MyApp({super.key, required this.isLoggedIn}) {
+  MyApp({Key? key, required this.isLoggedIn}) : super(key: key) {
     _initServices();
   }
 

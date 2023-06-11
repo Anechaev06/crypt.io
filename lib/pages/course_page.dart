@@ -23,7 +23,7 @@ class CoursePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              MarketChanges(service: coinService),
+              const MarketChanges(),
               SizedBox(height: padding),
               CategoriesWidget(service: coinService),
               _buildCoinList(),

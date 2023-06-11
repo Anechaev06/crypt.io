@@ -11,6 +11,21 @@ class CoinPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final coinService = Get.find<CoinService>();
+    final coin = coinService.coinsList[index];
+    final coinPrice = coin.currentPrice;
+    final coinPriceChange = coin.priceChangePercentage24H;
+    final coinPriceChangeColor = coinPriceChange > 0
+        ? Colors.green
+        : coinPriceChange < 0
+            ? Colors.red
+            : Colors.grey;
+
+    final marketChangesIcon = coinPriceChange > 0
+        ? Icons.arrow_drop_up
+        : coinPriceChange < 0
+            ? Icons.arrow_drop_down
+            : null;
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -25,9 +40,8 @@ class CoinPage extends StatelessWidget {
             children: [
               // Price and price change
               Padding(
-                padding: const EdgeInsets.all(15),
+                padding: const EdgeInsets.all(20),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
@@ -36,21 +50,33 @@ class CoinPage extends StatelessWidget {
                           style: Theme.of(context).textTheme.headlineMedium,
                         ),
                         Text(
-                          '\$${coinService.coinsList[index].currentPrice.toStringAsFixed(2)}',
+                          '\$${coinPrice.toStringAsFixed(2)}',
                           style: Theme.of(context).textTheme.headlineMedium,
                         ),
                       ],
                     ),
                     const SizedBox(height: 10),
-                    Text(
-                      '${coinService.coinsList[index].priceChangePercentage24H.toStringAsFixed(2)}%',
-                      // style: TextStyle(color: priceChangeColor),
+                    Row(
+                      children: [
+                        Icon(
+                          marketChangesIcon,
+                          color: coinPriceChangeColor,
+                        ),
+                        Text(
+                          '${coinPriceChange.toStringAsFixed(2)}%',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(
+                                  color: coinPriceChangeColor, fontSize: 16),
+                        ),
+                      ],
                     ),
                   ],
                 ),
               ),
 
-              const SizedBox(height: 125),
+              const SizedBox(height: 100),
 
               // Coin Chart
               CoinChart(service: coinService, index: index),

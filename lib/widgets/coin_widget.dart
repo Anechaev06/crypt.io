@@ -17,7 +17,7 @@ class CoinWidget extends StatelessWidget {
     final coin = service.coinsList[index];
     final coinPrice = coin.currentPrice;
     final coinPriceChange = coin.priceChangePercentage24H;
-    final coinChangesColor = coinPriceChange > 0
+    final coinPriceChangeColor = coinPriceChange > 0
         ? Colors.green
         : coinPriceChange < 0
             ? Colors.red
@@ -75,7 +75,7 @@ class CoinWidget extends StatelessWidget {
                   style: Theme.of(context)
                       .textTheme
                       .bodyMedium
-                      ?.copyWith(color: coinChangesColor),
+                      ?.copyWith(color: coinPriceChangeColor),
                 ),
               ],
             )
