@@ -1,11 +1,37 @@
-Maskify is a Flutter-based application focused on blockchain technology and cryptocurrency transactions. It offers a seamless way to login with Metamask, allowing users to manage and exchange cryptocurrencies with ease. Along with this, Maskify also provides a comprehensive crypto tracker to monitor your cryptocurrency portfolio in real time.
+Maskify: Your Crypto Companion
+Maskify is a highly integrated Flutter-based application rooted in the domain of blockchain technology and cryptocurrency transactions. It provides a swift and seamless way to connect with your Metamask account, manage, and swap cryptocurrencies with minimal effort. Further, Maskify equips you with a comprehensive cryptocurrency tracking system to scrutinize your crypto portfolio in real-time.
 
-Features:
-1. Metamask Login: Securely log into the app using your Metamask account.
-2. Crypto Swap: Seamlessly exchange between different cryptocurrencies.
-3. Crypto Tracker: Monitor your crypto investments in real-time.
+<p align="center">
+<img src="images/logo.png" width="200">
+</p>
+🌟 Features
+🔐 Metamask Login
+Breeze through the login process with your Metamask account. The security of your crypto holdings remains our prime concern.
 
-Usage
-1. Metamask Login: Simply click on the "Login with Metamask" button and authorize the application to use your Metamask account.
-2. Crypto Swap: Choose the cryptocurrencies you wish to swap from and to, specify the amount, and execute the transaction with just a few taps.
-3. Crypto Tracker: View real-time updates on all your crypto holdings and transactions within the app. Keep an eye on market trends and make the right decisions at the right time.
+💱 Crypto Swap
+Experience hassle-free trading between different cryptocurrencies. Customize your trading choices by selecting the 'from' and 'to' currencies, specifying the quantity, and hitting 'Swap' to finalize the transaction.
+
+📈 Crypto Tracker
+Maintain a watchful eye on your crypto investments through real-time updates on your holdings and transactions. Stay informed about the market trends to facilitate prudent decision-making.
+
+<p align="center">
+<img src="images/screenshot.png" width="200">
+</p>
+🔮 Usage
+🔐 Metamask Login
+Initiate by tapping on the "Login with Metamask" button. Proceed by authorizing the application to sync with your Metamask account.
+
+💱 Crypto Swap
+Opt for your preferred cryptocurrencies for the swap, key in the amount, and confirm the transaction. It's as simple as that.
+
+📈 Crypto Tracker
+Explore real-time updates related to your crypto holdings and transactions within the Maskify app. Stay updated about the market trends and seize the opportunity to make timely investment decisions.
+
+✉️ Contact Us
+For any queries or concerns about the project, feel free to open an issue on GitHub or reach out to us directly. We look forward to hearing from you!
+
+📜 License
+This project is licensed under the MIT License - refer to the LICENSE.md file for more details.
+
+💡 Contributing
+We welcome and value contributions. Kindly read the CONTRIBUTING.md for instructions on the process of submitting pull requests to us.
