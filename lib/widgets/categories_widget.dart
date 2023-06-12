@@ -1,10 +1,11 @@
+import 'package:crypt_io/widgets/search_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../constants/colors.dart';
 import '../services/coin_service.dart';
 
 class CategoriesWidget extends StatefulWidget {
-  final CoinService service;
-  const CategoriesWidget({super.key, required this.service});
+  const CategoriesWidget({super.key});
 
   @override
   State<CategoriesWidget> createState() => _CategoriesWidgetState();
@@ -13,21 +14,35 @@ class CategoriesWidget extends StatefulWidget {
 class _CategoriesWidgetState extends State<CategoriesWidget> {
   CoinSortType _selectedSortType = CoinSortType.all;
 
+  CoinService get coinService => Get.find<CoinService>();
+
   @override
   void initState() {
     super.initState();
-    widget.service.sortCoins(_selectedSortType);
+    coinService.sortCoins(_selectedSortType);
   }
+
+  TextEditingController textController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const Text("Assets",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-        Padding(
-          padding: const EdgeInsets.all(10),
-          child: Row(
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                "Assets",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              ),
+              SearchWidget(onSearch: (searchText) {
+                coinService.searchCoins(searchText);
+              }),
+            ],
+          ),
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               _buildButton("All coins", CoinSortType.all),
@@ -35,8 +50,8 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
               _buildButton("Top losers", CoinSortType.topLosers),
             ],
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -72,6 +87,6 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
 
   void _updateSortType(CoinSortType type) {
     setState(() => _selectedSortType = type);
-    widget.service.sortCoins(type);
+    coinService.sortCoins(type);
   }
 }

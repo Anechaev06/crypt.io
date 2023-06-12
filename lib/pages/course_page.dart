@@ -11,11 +11,10 @@ class CoursePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final coinService = Get.find<CoinService>();
-    Future<void> refreshData() => coinService.fetchCoins();
-    double padding = MediaQuery.of(context).size.width * 0.05;
+    Future refreshData() => coinService.fetchCoins();
 
     return Padding(
-      padding: EdgeInsets.all(padding),
+      padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
       child: RefreshIndicator(
         onRefresh: refreshData,
         child: SingleChildScrollView(
@@ -24,8 +23,7 @@ class CoursePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const MarketChanges(),
-              SizedBox(height: padding),
-              CategoriesWidget(service: coinService),
+              const CategoriesWidget(),
               _buildCoinList(),
             ],
           ),
@@ -37,6 +35,10 @@ class CoursePage extends StatelessWidget {
   Widget _buildCoinList() {
     return GetBuilder<CoinService>(
       builder: (service) {
+        if (service.coinsList.isEmpty) {
+          return const Center(child: Text('No coins found'));
+        }
+
         return ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),

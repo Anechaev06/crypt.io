@@ -19,6 +19,7 @@ dependencies:
   sliding_up_panel: ^2.0.0+1
   fl_chart: ^0.62.0
   local_auth: ^2.1.6
+  anim_search_bar: ^2.0.3
   
 dev_dependencies:
   flutter_test:

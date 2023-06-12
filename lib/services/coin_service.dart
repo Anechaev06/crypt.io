@@ -69,16 +69,15 @@ class CoinService extends GetxController {
   }
 
   double marketChanges24H() {
-    final bitcoin = coinsList.isNotEmpty
-        ? coinsList
-            .firstWhere((coin) => coin.id == 'bitcoin')
-            .priceChangePercentage24H
-        : 0.0;
-    final ethereum = coinsList.isNotEmpty
-        ? coinsList
-            .firstWhere((coin) => coin.id == 'ethereum')
-            .priceChangePercentage24H
-        : 0.0;
+    final bitcoin = coinsList
+            .firstWhereOrNull((coin) => coin.id == 'bitcoin')
+            ?.priceChangePercentage24H ??
+        0.0;
+
+    final ethereum = coinsList
+            .firstWhereOrNull((coin) => coin.id == 'ethereum')
+            ?.priceChangePercentage24H ??
+        0.0;
 
     return (bitcoin + ethereum) / 2;
   }
@@ -111,5 +110,16 @@ class CoinService extends GetxController {
       '1y': 'daily'
     };
     return intervalEndpoints[interval];
+  }
+
+  void searchCoins(String name) {
+    if (name.isEmpty) {
+      _coinsList.value = List.from(_originalCoinsList);
+    } else {
+      _coinsList.value = _originalCoinsList
+          .where((coin) => coin.name.toLowerCase().contains(name.toLowerCase()))
+          .toList();
+    }
+    update();
   }
 }
