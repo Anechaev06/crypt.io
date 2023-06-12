@@ -1,10 +1,9 @@
 Maskify: Your Crypto Companion
+
 Maskify is a highly integrated Flutter-based application rooted in the domain of blockchain technology and cryptocurrency transactions. It provides a swift and seamless way to connect with your Metamask account, manage, and swap cryptocurrencies with minimal effort. Further, Maskify equips you with a comprehensive cryptocurrency tracking system to scrutinize your crypto portfolio in real-time.
 
-<p align="center">
-<img src="images/logo.png" width="200">
-</p>
 🌟 Features
+
 🔐 Metamask Login
 Breeze through the login process with your Metamask account. The security of your crypto holdings remains our prime concern.
 
@@ -14,10 +13,8 @@ Experience hassle-free trading between different cryptocurrencies. Customize you
 📈 Crypto Tracker
 Maintain a watchful eye on your crypto investments through real-time updates on your holdings and transactions. Stay informed about the market trends to facilitate prudent decision-making.
 
-<p align="center">
-<img src="images/screenshot.png" width="200">
-</p>
 🔮 Usage
+
 🔐 Metamask Login
 Initiate by tapping on the "Login with Metamask" button. Proceed by authorizing the application to sync with your Metamask account.
 
