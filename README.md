@@ -19,7 +19,7 @@ Maintain a watchful eye on your crypto investments through real-time updates on 
 Initiate by tapping on the "Login with Metamask" button. Proceed by authorizing the application to sync with your Metamask account.
 
 💱 Crypto Swap
-Opt for your preferred cryptocurrencies for the swap, key in the amount, and confirm the transaction. It's as simple as that.
+Opt for your preferred cryptocurrencies for the swap, key in the amount, and confirm the transaction.
 
 📈 Crypto Tracker
 Explore real-time updates related to your crypto holdings and transactions within the Maskify app. Stay updated about the market trends and seize the opportunity to make timely investment decisions.
