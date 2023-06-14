@@ -1,4 +1,4 @@
-import 'package:crypt_io/services/coin_service.dart';
+import 'package:maskify/services/coin_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

@@ -134,11 +134,14 @@ class MetamaskService extends GetxController {
   }
 
   // Clears the privateKey when a user logs out
-  void logout() {
+  Future<void> logout() async {
     updateUserAddress('');
     balance.value = '0';
     switchNetwork('eth');
     toggleHideBalance(false);
     _privateKey = null;
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isLoggedIn', false);
   }
 }

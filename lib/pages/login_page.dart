@@ -7,7 +7,7 @@ import '../widgets/navigation_widget.dart';
 class LoginPage extends StatelessWidget {
   final TextEditingController _addressController = TextEditingController();
 
-  LoginPage({super.key});
+  LoginPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -63,12 +63,12 @@ class LoginPage extends StatelessWidget {
     final MetamaskService metamaskService = Get.find();
 
     try {
-      metamaskService.loginWithPrivateKey(privateKey);
+      await metamaskService.loginWithPrivateKey(privateKey);
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setBool('isLoggedIn', true);
       _navigateToHome(context);
     } catch (e) {
-      _showErrorDialog(context, e.toString());
+      // _showErrorDialog(context, e.toString());
     }
   }
 
@@ -81,19 +81,19 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  void _showErrorDialog(BuildContext context, String message) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Error'),
-        content: Text('Failed to connect: $message'),
-        actions: [
-          ElevatedButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('OK'),
-          ),
-        ],
-      ),
-    );
-  }
+  // void _showErrorDialog(BuildContext context, String message) {
+  //   showDialog(
+  //     context: context,
+  //     builder: (context) => AlertDialog(
+  //       title: const Text('Error'),
+  //       content: Text('Failed to connect: $message'),
+  //       actions: [
+  //         ElevatedButton(
+  //           onPressed: () => Navigator.pop(context),
+  //           child: const Text('OK'),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 }

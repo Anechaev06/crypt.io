@@ -1,4 +1,4 @@
-import 'package:crypt_io/widgets/search_widget.dart';
+import 'package:maskify/widgets/search_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../constants/colors.dart';

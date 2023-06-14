@@ -1,6 +1,6 @@
-import 'package:crypt_io/constants/colors.dart';
-import 'package:crypt_io/pages/login_page.dart';
-import 'package:crypt_io/widgets/favorite_widget.dart';
+import 'package:maskify/constants/colors.dart';
+import 'package:maskify/pages/login_page.dart';
+import 'package:maskify/widgets/favorite_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -53,7 +53,7 @@ class ProfilePage extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        SizedBox(height: 100, child: Image.asset("assets/images/metamask.png")),
+        SizedBox(height: 100, child: Image.asset("assets/metamask.png")),
         Obx(
           () {
             return Text(

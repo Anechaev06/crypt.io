@@ -1,5 +1,5 @@
-import 'package:crypt_io/pages/profile_page.dart';
-import 'package:crypt_io/pages/swap_page.dart';
+import 'package:maskify/pages/profile_page.dart';
+import 'package:maskify/pages/swap_page.dart';
 import 'package:flutter/material.dart';
 import '../pages/course_page.dart';
 

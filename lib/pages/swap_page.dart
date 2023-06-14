@@ -1,5 +1,5 @@
-import 'package:crypt_io/services/metamask_service.dart';
-import 'package:crypt_io/services/swap_service.dart';
+import 'package:maskify/services/metamask_service.dart';
+import 'package:maskify/services/swap_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

@@ -1,5 +1,5 @@
-import 'package:crypt_io/constants/colors.dart';
-import 'package:crypt_io/widgets/coin_widget.dart';
+import 'package:maskify/constants/colors.dart';
+import 'package:maskify/widgets/coin_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../services/coin_service.dart';

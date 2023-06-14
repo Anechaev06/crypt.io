@@ -1,5 +1,5 @@
-import 'package:crypt_io/constants/colors.dart';
-import 'package:crypt_io/themes/text_theme.dart';
+import 'package:maskify/constants/colors.dart';
+import 'package:maskify/themes/text_theme.dart';
 import 'package:flutter/material.dart';
 
 class AppTheme {

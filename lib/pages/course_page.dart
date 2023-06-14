@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:crypt_io/widgets/categories_widget.dart';
-import 'package:crypt_io/widgets/coin_widget.dart';
-import 'package:crypt_io/widgets/market_changes_widget.dart';
+import 'package:maskify/widgets/categories_widget.dart';
+import 'package:maskify/widgets/coin_widget.dart';
+import 'package:maskify/widgets/market_changes_widget.dart';
 import 'package:get/get.dart';
 import '../services/coin_service.dart';
 
@@ -35,10 +35,6 @@ class CoursePage extends StatelessWidget {
   Widget _buildCoinList() {
     return GetBuilder<CoinService>(
       builder: (service) {
-        if (service.coinsList.isEmpty) {
-          return const Center(child: Text('No coins found'));
-        }
-
         return ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),

@@ -1,4 +1,4 @@
-import 'package:crypt_io/models/coin_model.dart';
+import 'package:maskify/models/coin_model.dart';
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
