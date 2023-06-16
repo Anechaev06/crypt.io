@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../services/metamask_service.dart';
+import '../services/auth_service.dart';
 import '../widgets/navigation_widget.dart';
 
 class LoginPage extends StatelessWidget {
-  final TextEditingController _addressController = TextEditingController();
+  final _addressController = TextEditingController();
 
-  LoginPage({Key? key}) : super(key: key);
+  LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -60,16 +58,8 @@ class LoginPage extends StatelessWidget {
 
   Future<void> _connectButtonPressed(BuildContext context) async {
     final privateKey = _addressController.text;
-    final MetamaskService metamaskService = Get.find();
-
-    try {
-      await metamaskService.loginWithPrivateKey(privateKey);
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setBool('isLoggedIn', true);
-      _navigateToHome(context);
-    } catch (e) {
-      // _showErrorDialog(context, e.toString());
-    }
+    await AuthService.loginUser(privateKey);
+    _navigateToHome(context);
   }
 
   void _navigateToHome(BuildContext context) {
@@ -80,20 +70,4 @@ class LoginPage extends StatelessWidget {
       ),
     );
   }
-
-  // void _showErrorDialog(BuildContext context, String message) {
-  //   showDialog(
-  //     context: context,
-  //     builder: (context) => AlertDialog(
-  //       title: const Text('Error'),
-  //       content: Text('Failed to connect: $message'),
-  //       actions: [
-  //         ElevatedButton(
-  //           onPressed: () => Navigator.pop(context),
-  //           child: const Text('OK'),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
 }

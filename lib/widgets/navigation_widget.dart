@@ -35,7 +35,7 @@ class _NavigationWidgetState extends State<NavigationWidget> {
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.currency_bitcoin),
-              label: 'Course',
+              label: 'Crypto',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.swap_horiz_rounded),
