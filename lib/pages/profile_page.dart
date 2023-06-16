@@ -1,12 +1,12 @@
-import 'package:maskify/constants/colors.dart';
-import 'package:maskify/pages/login_page.dart';
-import 'package:maskify/widgets/favorite_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:maskify/constants/colors.dart';
+import 'package:maskify/pages/login_page.dart';
+import 'package:maskify/services/metamask_service.dart';
+import 'package:maskify/widgets/favorite_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import '../services/metamask_service.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -16,7 +16,7 @@ class ProfilePage extends StatelessWidget {
     final metamaskService = Get.find<MetamaskService>();
 
     return SlidingUpPanel(
-      panel: _buildSettingsSection(context, metamaskService),
+      panel: SettingsSection(metamaskService: metamaskService),
       color: bgColor,
       minHeight: 70,
       maxHeight: MediaQuery.of(context).size.height / 2,
@@ -35,7 +35,7 @@ class ProfilePage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  _buildProfileSection(metamaskService),
+                  ProfileSection(metamaskService: metamaskService),
                   const SizedBox(
                     height: 500,
                     child: FavoriteCoinWidget(),
@@ -48,8 +48,15 @@ class ProfilePage extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildProfileSection(MetamaskService metamaskService) {
+class ProfileSection extends StatelessWidget {
+  final MetamaskService metamaskService;
+
+  const ProfileSection({super.key, required this.metamaskService});
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -64,12 +71,19 @@ class ProfilePage extends StatelessWidget {
             );
           },
         ),
-        _buildElevatedButton(metamaskService),
+        ElevatedButtonWidget(metamaskService: metamaskService),
       ],
     );
   }
+}
 
-  Widget _buildElevatedButton(MetamaskService metamaskService) {
+class ElevatedButtonWidget extends StatelessWidget {
+  final MetamaskService metamaskService;
+
+  const ElevatedButtonWidget({super.key, required this.metamaskService});
+
+  @override
+  Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
         Clipboard.setData(
@@ -92,41 +106,59 @@ class ProfilePage extends StatelessWidget {
       }),
     );
   }
+}
 
-  Widget _buildSettingsSection(
-      BuildContext context, MetamaskService metamaskService) {
+class SettingsSection extends StatelessWidget {
+  final MetamaskService metamaskService;
+
+  const SettingsSection({super.key, required this.metamaskService});
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 30, right: 30),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // Drag Handle
-          const SizedBox(height: 12),
-          Container(
-            width: 30,
-            height: 5,
-            decoration: BoxDecoration(
-                color: Colors.grey[300],
-                borderRadius: BorderRadius.circular(12)),
-          ),
+          const DragHandle(),
           const SizedBox(height: 15),
           const Text(
             "Settings",
             style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
           ),
-          _buildHideBalance(context, metamaskService),
+          HideBalanceWidget(metamaskService: metamaskService),
           const Divider(height: 5, thickness: 0.25, color: Colors.grey),
-          _buildNetwork(context, metamaskService),
+          NetworkWidget(metamaskService: metamaskService),
           const Divider(height: 5, thickness: 0.25, color: Colors.grey),
-          _buildPushNotifications(context, metamaskService),
-          _buildLogoutButton(context, metamaskService),
+          PushNotificationsWidget(metamaskService: metamaskService),
+          LogoutButton(metamaskService: metamaskService),
         ],
       ),
     );
   }
+}
 
-  Widget _buildHideBalance(
-      BuildContext context, MetamaskService metamaskService) {
+class DragHandle extends StatelessWidget {
+  const DragHandle({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 30,
+      height: 5,
+      decoration: BoxDecoration(
+          color: Colors.grey[300], borderRadius: BorderRadius.circular(12)),
+    );
+  }
+}
+
+class HideBalanceWidget extends StatelessWidget {
+  final MetamaskService metamaskService;
+
+  const HideBalanceWidget({super.key, required this.metamaskService});
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Obx(
@@ -145,8 +177,15 @@ class ProfilePage extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildNetwork(BuildContext context, MetamaskService metamaskService) {
+class NetworkWidget extends StatelessWidget {
+  final MetamaskService metamaskService;
+
+  const NetworkWidget({super.key, required this.metamaskService});
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Row(
@@ -176,9 +215,15 @@ class ProfilePage extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildPushNotifications(
-      BuildContext context, MetamaskService metamaskService) {
+class PushNotificationsWidget extends StatelessWidget {
+  final MetamaskService metamaskService;
+
+  const PushNotificationsWidget({super.key, required this.metamaskService});
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Obx(
@@ -195,9 +240,15 @@ class ProfilePage extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildLogoutButton(
-      BuildContext context, MetamaskService metamaskService) {
+class LogoutButton extends StatelessWidget {
+  final MetamaskService metamaskService;
+
+  const LogoutButton({super.key, required this.metamaskService});
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(20),
       child: OutlinedButton(

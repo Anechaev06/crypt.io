@@ -17,7 +17,10 @@ class SwapService extends GetxController {
     try {
       final credentials = EthPrivateKey.fromHex(privateKey);
       final tokenContract = DeployedContract(
-        ContractAbi.fromJson('Your Token ABI', 'Token'),
+        ContractAbi.fromJson(
+          '[{"constant":false,"inputs":[{"name":"spender","type":"address"},{"name":"value","type":"uint256"}],"name":"approve","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"}]',
+          'Token',
+        ),
         EthereumAddress.fromHex(tokenContractAddress),
       );
 
@@ -57,7 +60,10 @@ class SwapService extends GetxController {
     try {
       final credentials = EthPrivateKey.fromHex(privateKey);
       final routerContract = DeployedContract(
-        ContractAbi.fromJson('Your Router ABI', 'Router'),
+        ContractAbi.fromJson(
+          '[{"constant":false,"inputs":[{"name":"amountIn","type":"uint256"},{"name":"amountOutMin","type":"uint256"},{"name":"path","type":"address[]"},{"name":"to","type":"address"},{"name":"deadline","type":"uint256"}],"name":"swapExactTokensForTokens","outputs":[{"name":"amounts","type":"uint256[]"}],"payable":false,"stateMutability":"nonpayable","type":"function"}]',
+          'Router',
+        ),
         _metamaskService.activeNetwork.value == 'eth'
             ? EthereumAddress.fromHex(_uniswapRouterAddress)
             : EthereumAddress.fromHex(_pancakeswapRouterAddress),
