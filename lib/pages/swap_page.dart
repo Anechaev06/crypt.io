@@ -23,36 +23,44 @@ class _SwapPageState extends State<SwapPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider.value(
-      value: _model,
-      child: Consumer<SwapModel>(
-        builder: (context, model, child) => Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              buildTokenAmountInputField(
-                model.selectedToken1,
-                model.selectedToken2,
-                _controller.enterAmount1,
-                _controller.selectToken1,
-              ),
-              OutlinedButton(
-                onPressed: _controller.dropdownSwap,
-                child: const Icon(Icons.swap_vert_rounded),
-              ),
-              buildTokenAmountInputField(
-                model.selectedToken2,
-                model.selectedToken1,
-                _controller.enterAmount2,
-                _controller.selectToken2,
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _controller.swapTokens,
-                child: const Text('Swap'),
-              ),
-            ],
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Swap"),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        centerTitle: true,
+      ),
+      body: ChangeNotifierProvider.value(
+        value: _model,
+        child: Consumer<SwapModel>(
+          builder: (context, model, child) => Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                buildTokenAmountInputField(
+                  model.selectedToken1,
+                  model.selectedToken2,
+                  _controller.enterAmount1,
+                  _controller.selectToken1,
+                ),
+                OutlinedButton(
+                  onPressed: _controller.dropdownSwap,
+                  child: const Icon(Icons.swap_vert_rounded),
+                ),
+                buildTokenAmountInputField(
+                  model.selectedToken2,
+                  model.selectedToken1,
+                  _controller.enterAmount2,
+                  _controller.selectToken2,
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: _controller.swapTokens,
+                  child: const Text('Swap'),
+                ),
+              ],
+            ),
           ),
         ),
       ),

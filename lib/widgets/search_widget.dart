@@ -1,6 +1,5 @@
 import 'package:anim_search_bar/anim_search_bar.dart';
 import 'package:flutter/cupertino.dart';
-
 import '../constants/colors.dart';
 
 class SearchWidget extends StatefulWidget {

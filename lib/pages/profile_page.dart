@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:maskify/constants/colors.dart';
 import 'package:maskify/pages/login_page.dart';
+import 'package:maskify/pages/send_page.dart';
+import 'package:maskify/pages/swap_page.dart';
 import 'package:maskify/services/metamask_service.dart';
 import 'package:maskify/widgets/favorite_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,7 +20,7 @@ class ProfilePage extends StatelessWidget {
     return SlidingUpPanel(
       panel: SettingsSection(metamaskService: metamaskService),
       color: bgColor,
-      minHeight: 70,
+      minHeight: 60,
       maxHeight: MediaQuery.of(context).size.height / 2,
       backdropEnabled: true,
       borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
@@ -37,7 +39,7 @@ class ProfilePage extends StatelessWidget {
                 children: [
                   ProfileSection(metamaskService: metamaskService),
                   const SizedBox(
-                    height: 500,
+                    height: 400,
                     child: FavoriteCoinWidget(),
                   ),
                 ],
@@ -71,16 +73,47 @@ class ProfileSection extends StatelessWidget {
             );
           },
         ),
-        ElevatedButtonWidget(metamaskService: metamaskService),
+        AddressButtonWidget(metamaskService: metamaskService),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Send Icon
+            OutlinedButton.icon(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SendPage(),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.send_rounded),
+              label: const Text("Send"),
+            ),
+            const SizedBox(width: 10),
+            OutlinedButton.icon(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SwapPage(),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.swap_horiz_rounded),
+              label: const Text("Swap"),
+            ),
+          ],
+        )
       ],
     );
   }
 }
 
-class ElevatedButtonWidget extends StatelessWidget {
+class AddressButtonWidget extends StatelessWidget {
   final MetamaskService metamaskService;
 
-  const ElevatedButtonWidget({super.key, required this.metamaskService});
+  const AddressButtonWidget({super.key, required this.metamaskService});
 
   @override
   Widget build(BuildContext context) {
@@ -147,7 +180,9 @@ class DragHandle extends StatelessWidget {
       width: 30,
       height: 5,
       decoration: BoxDecoration(
-          color: Colors.grey[300], borderRadius: BorderRadius.circular(12)),
+        color: Colors.grey[300],
+        borderRadius: BorderRadius.circular(12),
+      ),
     );
   }
 }

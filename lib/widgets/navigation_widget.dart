@@ -1,7 +1,6 @@
 import 'package:maskify/pages/profile_page.dart';
-import 'package:maskify/pages/swap_page.dart';
 import 'package:flutter/material.dart';
-import '../pages/course_page.dart';
+import '../pages/market_page.dart';
 
 class NavigationWidget extends StatefulWidget {
   const NavigationWidget({super.key});
@@ -15,7 +14,6 @@ class _NavigationWidgetState extends State<NavigationWidget> {
 
   static final List<Widget> _pages = [
     const CoursePage(),
-    const SwapPage(),
     const ProfilePage(),
   ];
 
@@ -35,11 +33,7 @@ class _NavigationWidgetState extends State<NavigationWidget> {
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.currency_bitcoin),
-              label: 'Crypto',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.swap_horiz_rounded),
-              label: 'Swap',
+              label: 'Markets',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person_rounded),

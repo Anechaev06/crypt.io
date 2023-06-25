@@ -69,12 +69,12 @@ class CoinService extends GetxController {
   }
 
   double marketChanges24H() {
-    final bitcoin = coinsList
+    final bitcoin = _originalCoinsList
             .firstWhereOrNull((coin) => coin.id == 'bitcoin')
             ?.priceChangePercentage24H ??
         0.0;
 
-    final ethereum = coinsList
+    final ethereum = _originalCoinsList
             .firstWhereOrNull((coin) => coin.id == 'ethereum')
             ?.priceChangePercentage24H ??
         0.0;
