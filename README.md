@@ -18,7 +18,7 @@
 ![5](https://github.com/Anechaev06/maskify/assets/57583912/2f439105-b72c-44fa-addd-e26ac3b627c6)
 ![6](https://github.com/Anechaev06/maskify/assets/57583912/173508bd-3cf8-409b-8549-cf7c00a016b6)
 
-## ✉️ Contact Us
+## ✉️ Contact
 **For any queries or concerns about the project, feel free to open an issue on GitHub or reach out to us directly. We look forward to hearing from you!**
 
 ## 📜 License
