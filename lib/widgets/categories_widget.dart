@@ -45,9 +45,9 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _buildButton("All coins", CoinSortType.all),
-              _buildButton("Top gainers", CoinSortType.topGainers),
-              _buildButton("Top losers", CoinSortType.topLosers),
+              _buildButton("Popular", CoinSortType.all),
+              _buildButton("Gainers", CoinSortType.topGainers),
+              _buildButton("Losers", CoinSortType.topLosers),
             ],
           ),
         ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maskify/constants/colors.dart';
 import '../services/auth_service.dart';
 import '../widgets/navigation_widget.dart';
 
@@ -21,6 +22,7 @@ class LoginPage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         _buildAddressTextField(),
+        const SizedBox(height: 15),
         ElevatedButton(
           onPressed: () => _connectButtonPressed(context),
           child: const Text('Connect'),
@@ -40,15 +42,11 @@ class LoginPage extends StatelessWidget {
         labelStyle:
             TextStyle(fontWeight: FontWeight.bold, color: Colors.grey[600]!),
         focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.orange),
+          borderSide: const BorderSide(color: newPrimaryColor),
           borderRadius: BorderRadius.circular(10.0),
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey[400]!),
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.red),
+          borderSide: const BorderSide(color: newPrimaryColor),
           borderRadius: BorderRadius.circular(10.0),
         ),
         errorStyle: const TextStyle(color: Colors.red),

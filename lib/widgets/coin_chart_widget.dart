@@ -48,7 +48,7 @@ class _CoinChartState extends State<CoinChart> {
           return Column(
             children: [
               SizedBox(
-                width: 350,
+                width: 375,
                 child: AspectRatio(
                   aspectRatio: 1,
                   child: LineChart(
@@ -61,18 +61,21 @@ class _CoinChartState extends State<CoinChart> {
                               return LineTooltipItem(
                                 barSpot.y.toStringAsFixed(2),
                                 const TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               );
                             }).toList();
                           },
                         ),
                       ),
-                      gridData: FlGridData(show: false),
+                      gridData: FlGridData(show: true),
                       titlesData: FlTitlesData(
                         show: true,
                         bottomTitles: AxisTitles(
-                            sideTitles: SideTitles(showTitles: true)),
+                          sideTitles:
+                              SideTitles(showTitles: true, reservedSize: 25),
+                        ),
                         topTitles: AxisTitles(
                             sideTitles: SideTitles(showTitles: false)),
                         leftTitles: AxisTitles(

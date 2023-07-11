@@ -38,10 +38,7 @@ class ProfilePage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   ProfileSection(metamaskService: metamaskService),
-                  const SizedBox(
-                    height: 400,
-                    child: FavoriteCoinWidget(),
-                  ),
+                  const FavoriteCoinListWidget(),
                 ],
               ),
             ),

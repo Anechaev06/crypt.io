@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../services/coin_service.dart';
 
-class FavoriteCoinWidget extends StatelessWidget {
-  const FavoriteCoinWidget({super.key});
+class FavoriteCoinListWidget extends StatelessWidget {
+  const FavoriteCoinListWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,18 +22,21 @@ class FavoriteCoinWidget extends StatelessWidget {
               .map((entry) => entry.key)
               .toList();
 
-          return ListView.separated(
-            shrinkWrap: true,
-            physics: const ScrollPhysics(),
-            itemCount: favoriteCoinsIndices.length,
-            separatorBuilder: (context, index) => const Divider(
-              height: 5,
-              thickness: 0.25,
-              color: Colors.grey,
-            ),
-            itemBuilder: (context, index) => CoinWidget(
-              index: favoriteCoinsIndices[index],
-              service: service,
+          return SizedBox(
+            height: MediaQuery.of(context).size.height * 0.5,
+            child: ListView.separated(
+              shrinkWrap: true,
+              physics: const ScrollPhysics(),
+              itemCount: favoriteCoinsIndices.length,
+              separatorBuilder: (context, index) => const Divider(
+                height: 5,
+                thickness: 0.25,
+                color: Colors.grey,
+              ),
+              itemBuilder: (context, index) => CoinWidget(
+                index: favoriteCoinsIndices[index],
+                service: service,
+              ),
             ),
           );
         }

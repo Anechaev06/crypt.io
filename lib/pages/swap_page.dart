@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maskify/constants/colors.dart';
 import 'package:maskify/models/swap_model.dart';
 import 'package:maskify/controllers/swap_controller.dart';
 import 'package:provider/provider.dart';
@@ -80,7 +81,7 @@ class _SwapPageState extends State<SwapPage> {
       width: 125,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.orange),
+        border: Border.all(color: newPrimaryColor),
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
