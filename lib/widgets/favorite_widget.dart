@@ -22,20 +22,23 @@ class FavoriteCoinListWidget extends StatelessWidget {
               .map((entry) => entry.key)
               .toList();
 
-          return SizedBox(
-            height: MediaQuery.of(context).size.height * 0.5,
-            child: ListView.separated(
-              shrinkWrap: true,
-              physics: const ScrollPhysics(),
-              itemCount: favoriteCoinsIndices.length,
-              separatorBuilder: (context, index) => const Divider(
-                height: 5,
-                thickness: 0.25,
-                color: Colors.grey,
-              ),
-              itemBuilder: (context, index) => CoinWidget(
-                index: favoriteCoinsIndices[index],
-                service: service,
+          return Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height * 0.5,
+              child: ListView.separated(
+                shrinkWrap: true,
+                physics: const ScrollPhysics(),
+                itemCount: favoriteCoinsIndices.length,
+                separatorBuilder: (context, index) => const Divider(
+                  height: 5,
+                  thickness: 0.25,
+                  color: Colors.grey,
+                ),
+                itemBuilder: (context, index) => CoinWidget(
+                  index: favoriteCoinsIndices[index],
+                  service: service,
+                ),
               ),
             ),
           );

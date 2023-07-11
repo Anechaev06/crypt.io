@@ -31,16 +31,13 @@ class ProfilePage extends StatelessWidget {
         },
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
-          child: Padding(
-            padding: const EdgeInsets.all(25),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  ProfileSection(metamaskService: metamaskService),
-                  const FavoriteCoinListWidget(),
-                ],
-              ),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                ProfileSection(metamaskService: metamaskService),
+                const FavoriteCoinListWidget(),
+              ],
             ),
           ),
         ),
