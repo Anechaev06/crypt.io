@@ -7,8 +7,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 enum CoinSortType { all, topGainers, topLosers }
 
 class CoinService extends GetxController {
-  final _apiUrl =
+  static const _apiUrl =
       "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false";
+  static const _favoritesKey = 'favorites';
+
   final _coinsList = <CoinModel>[].obs;
   final _originalCoinsList = <CoinModel>[].obs;
   List<String> _favoriteCoinsList = [];
@@ -26,69 +28,105 @@ class CoinService extends GetxController {
   }
 
   Future<void> fetchCoins() async {
-    _isLoading(true);
+    _setLoading(true);
     try {
-      final response = await http.get(Uri.parse(_apiUrl));
-      if (response.statusCode == 200) {
-        final coins = coinModelFromJson(response.body);
-        _coinsList.value = coins;
-        _originalCoinsList.value = List.from(coins);
-
-        _indexToIdMap.clear();
-        for (var i = 0; i < coins.length; i++) {
-          _indexToIdMap[i] = coins[i].id;
-        }
-
-        // Load favorites from shared preferences
-        final prefs = await SharedPreferences.getInstance();
-        _favoriteCoinsList = prefs.getStringList('favorites') ?? [];
-      }
+      final coins = await _fetchCoinsFromAPI();
+      _setCoins(coins);
+      _loadFavorites();
     } finally {
-      _isLoading(false);
+      _setLoading(false);
     }
     update();
   }
 
-  void addFavorite(String coinId) async {
+  Future<List<CoinModel>> _fetchCoinsFromAPI() async {
+    final response = await http.get(Uri.parse(_apiUrl));
+    if (response.statusCode == 200) {
+      return coinModelFromJson(response.body);
+    } else {
+      throw Exception('Failed to fetch coins');
+    }
+  }
+
+  void _setCoins(List<CoinModel> coins) {
+    _coinsList.value = coins;
+    _originalCoinsList.value = List.from(coins);
+
+    _indexToIdMap.clear();
+    for (var i = 0; i < coins.length; i++) {
+      _indexToIdMap[i] = coins[i].id;
+    }
+  }
+
+  Future<void> _loadFavorites() async {
+    final prefs = await SharedPreferences.getInstance();
+    _favoriteCoinsList = prefs.getStringList(_favoritesKey) ?? [];
+  }
+
+  void _setLoading(bool value) {
+    _isLoading.value = value;
+  }
+
+  Future<void> addFavorite(String coinId) async {
+    _toggleFavorite(coinId);
+    await _persistFavorites();
+    update();
+  }
+
+  void _toggleFavorite(String coinId) {
     if (_favoriteCoinsList.contains(coinId)) {
       _favoriteCoinsList.remove(coinId);
     } else {
       _favoriteCoinsList.add(coinId);
     }
+  }
+
+  Future<void> _persistFavorites() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setStringList('favorites', _favoriteCoinsList);
-    update();
+    await prefs.setStringList(_favoritesKey, _favoriteCoinsList);
   }
 
   void sortCoins(CoinSortType sortType) {
     switch (sortType) {
       case CoinSortType.all:
-        _coinsList.value = List.from(_originalCoinsList);
+        _resetCoinsList();
         break;
       case CoinSortType.topGainers:
-        _coinsList.sort((a, b) =>
-            b.priceChangePercentage24H.compareTo(a.priceChangePercentage24H));
+        _sortCoinsListDescending();
         break;
       case CoinSortType.topLosers:
-        _coinsList.sort((a, b) =>
-            a.priceChangePercentage24H.compareTo(b.priceChangePercentage24H));
+        _sortCoinsListAscending();
         break;
     }
     update();
   }
 
+  void _resetCoinsList() {
+    _coinsList.value = List.from(_originalCoinsList);
+  }
+
+  void _sortCoinsListDescending() {
+    _coinsList.sort((a, b) =>
+        b.priceChangePercentage24H.compareTo(a.priceChangePercentage24H));
+  }
+
+  void _sortCoinsListAscending() {
+    _coinsList.sort((a, b) =>
+        a.priceChangePercentage24H.compareTo(b.priceChangePercentage24H));
+  }
+
   double marketChanges24H() {
-    final bitcoin = _originalCoinsList
-            .firstWhereOrNull((coin) => coin.id == 'bitcoin')
+    final bitcoinChange = _getPriceChangePercentage('bitcoin');
+    final ethereumChange = _getPriceChangePercentage('ethereum');
+
+    return (bitcoinChange + ethereumChange) / 2;
+  }
+
+  double _getPriceChangePercentage(String coinId) {
+    return _originalCoinsList
+            .firstWhereOrNull((coin) => coin.id == coinId)
             ?.priceChangePercentage24H ??
         0.0;
-
-    final ethereum = _originalCoinsList
-            .firstWhereOrNull((coin) => coin.id == 'ethereum')
-            ?.priceChangePercentage24H ??
-        0.0;
-
-    return (bitcoin + ethereum) / 2;
   }
 
   Future<Map<String, List<double>>> fetchCoinChartData(
@@ -96,6 +134,10 @@ class CoinService extends GetxController {
     final endpoint = _getIntervalEndpoint(interval);
     final url =
         'https://api.coingecko.com/api/v3/coins/$coinId/market_chart?vs_currency=usd&days=$interval&interval=$endpoint';
+    return _fetchChartData(url);
+  }
+
+  Future<Map<String, List<double>>> _fetchChartData(String url) async {
     final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
@@ -123,12 +165,16 @@ class CoinService extends GetxController {
 
   void searchCoins(String name) {
     if (name.isEmpty) {
-      _coinsList.value = List.from(_originalCoinsList);
+      _resetCoinsList();
     } else {
-      _coinsList.value = _originalCoinsList
-          .where((coin) => coin.name.toLowerCase().contains(name.toLowerCase()))
-          .toList();
+      _filterCoinsByName(name);
     }
     update();
+  }
+
+  void _filterCoinsByName(String name) {
+    _coinsList.value = _originalCoinsList
+        .where((coin) => coin.name.toLowerCase().contains(name.toLowerCase()))
+        .toList();
   }
 }
