@@ -2,6 +2,7 @@ import 'package:maskify/models/coin_model.dart';
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 enum CoinSortType { all, topGainers, topLosers }
 
@@ -10,7 +11,7 @@ class CoinService extends GetxController {
       "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false";
   final _coinsList = <CoinModel>[].obs;
   final _originalCoinsList = <CoinModel>[].obs;
-  final List<String> _favoriteCoinsList = [];
+  List<String> _favoriteCoinsList = [];
   final Map<int, String> _indexToIdMap = {};
   final _isLoading = true.obs;
 
@@ -37,6 +38,10 @@ class CoinService extends GetxController {
         for (var i = 0; i < coins.length; i++) {
           _indexToIdMap[i] = coins[i].id;
         }
+
+        // Load favorites from shared preferences
+        final prefs = await SharedPreferences.getInstance();
+        _favoriteCoinsList = prefs.getStringList('favorites') ?? [];
       }
     } finally {
       _isLoading(false);
@@ -44,10 +49,14 @@ class CoinService extends GetxController {
     update();
   }
 
-  void addFavorite(String coinId) {
-    _favoriteCoinsList.contains(coinId)
-        ? _favoriteCoinsList.remove(coinId)
-        : _favoriteCoinsList.add(coinId);
+  void addFavorite(String coinId) async {
+    if (_favoriteCoinsList.contains(coinId)) {
+      _favoriteCoinsList.remove(coinId);
+    } else {
+      _favoriteCoinsList.add(coinId);
+    }
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList('favorites', _favoriteCoinsList);
     update();
   }
 
