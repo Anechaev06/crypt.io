@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-
 import '../pages/send_page.dart';
 import '../pages/swap_page.dart';
 import '../services/metamask_service.dart';
