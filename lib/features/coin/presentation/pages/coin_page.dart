@@ -79,7 +79,7 @@ class CoinPage extends StatelessWidget {
               const SizedBox(height: 50),
 
               // Coin Chart
-              CoinChart(service: coinRepository, index: index),
+              CoinChart(coinRepository: coinRepository, index: index),
             ],
           );
         }),
