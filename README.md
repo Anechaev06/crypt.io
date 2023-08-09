@@ -1,5 +1,3 @@
-![3](https://github.com/Anechaev06/maskify/assets/57583912/8cf75d6e-a2ab-497b-a125-2cda38d7a480)
-![4](https://github.com/Anechaev06/maskify/assets/57583912/da70db55-8539-48aa-95e0-f98f0496e1b1)
 # Maskify: Your Crypto Companion
 **Maskify is a highly integrated Flutter-based application rooted in the domain of blockchain technology and cryptocurrency transactions. It provides a swift and seamless way to connect with your Metamask account, manage, and swap cryptocurrencies with minimal effort. Further, Maskify equips you with a comprehensive cryptocurrency tracking system to scrutinize your crypto portfolio in real-time.**
 
