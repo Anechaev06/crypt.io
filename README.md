@@ -14,12 +14,13 @@
 **Maintain a watchful eye on your crypto investments through real-time updates on your holdings and transactions. Stay informed about the market trends to facilitate prudent decision-making.**
 
 ## 📸 Screenshots
-![1](https://github.com/Anechaev06/maskify/assets/57583912/a6b869a8-6f03-4d7b-b755-1f4ec27a4d63)
-![2](https://github.com/Anechaev06/maskify/assets/57583912/d5be1cdc-4c4f-40c9-a7c0-11a28d7ce318)
-![3](https://github.com/Anechaev06/maskify/assets/57583912/5b29e78c-64a0-4845-a86b-94282c0e18f8)
-![4](https://github.com/Anechaev06/maskify/assets/57583912/6da0caa3-f347-46d8-95e8-cdf30307ba9d)
-![5](https://github.com/Anechaev06/maskify/assets/57583912/2caa202e-0229-4aa0-839f-5cb0d15987cd)
-![6](https://github.com/Anechaev06/maskify/assets/57583912/54fd5d78-1566-480d-807f-5fed73edbd84)
+![1](https://github.com/Anechaev06/maskify/assets/57583912/d87b6fb3-cc79-434a-96c0-063715b7bed4)
+![2](https://github.com/Anechaev06/maskify/assets/57583912/567f34b6-d6f7-4170-bc49-a70b19ef3198)
+![3](https://github.com/Anechaev06/maskify/assets/57583912/44046e27-3560-4278-b9b7-70f6a14326f0)
+![4](https://github.com/Anechaev06/maskify/assets/57583912/eed17117-5201-4316-a034-74909f6ba5e5)
+![5](https://github.com/Anechaev06/maskify/assets/57583912/155aeee7-475e-40e5-962c-3de29b608dd6)
+![6](https://github.com/Anechaev06/maskify/assets/57583912/ec1303c3-0f85-419b-883a-ec72752aea43)
+
 
 ## ✉️ Contact
 **For any queries or concerns about the project, feel free to open an issue on GitHub or reach out to us directly. We look forward to hearing from you!**
