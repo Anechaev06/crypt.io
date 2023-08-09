@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import '../../data/repositories/coin_service.dart';
+import '../../data/repositories/coin_repository.dart';
 import '../pages/coin_page.dart';
 
 class CoinWidget extends StatelessWidget {
   final int index;
-  final CoinService service;
+  final CoinRepository coinRepository;
 
   const CoinWidget({
     super.key,
-    required this.service,
+    required this.coinRepository,
     required this.index,
   });
 
   @override
   Widget build(BuildContext context) {
-    final coin = service.coinsList[index];
+    final coin = coinRepository.coinsList[index];
     final coinPrice = coin.currentPrice;
     final coinPriceChange = coin.priceChangePercentage24H;
     final coinPriceChangeColor = coinPriceChange > 0
@@ -52,7 +52,7 @@ class CoinWidget extends StatelessWidget {
                 const SizedBox(width: 10),
                 // Coin Symbol
                 Text(
-                  service.coinsList[index].symbol.toUpperCase(),
+                  coinRepository.coinsList[index].symbol.toUpperCase(),
                   style: Theme.of(context)
                       .textTheme
                       .titleMedium

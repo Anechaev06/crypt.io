@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:web3dart/web3dart.dart';
 
-class MetamaskService extends GetxController {
+class MetamaskRepository extends GetxController {
   static const _infuraUrl =
       "https://mainnet.infura.io/v3/e799541effb8472d8a0ac96631acd045";
   static const _bscUrl = "https://bsc-dataseed.binance.org/";

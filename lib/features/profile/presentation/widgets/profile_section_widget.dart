@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import '../../../swap/presentation/pages/swap_page.dart';
-import '../../../metamask/data/repositories/metamask_service.dart';
+import '../../../metamask/data/repositories/metamask_repository.dart';
 import '../../../send/presentation/page/send_page.dart';
 
 class ProfileSection extends StatelessWidget {
-  final MetamaskService metamaskService;
+  final MetamaskRepository metamaskService;
 
   const ProfileSection({super.key, required this.metamaskService});
 
@@ -64,7 +64,7 @@ class ProfileSection extends StatelessWidget {
 }
 
 class AddressButtonWidget extends StatelessWidget {
-  final MetamaskService metamaskService;
+  final MetamaskRepository metamaskService;
 
   const AddressButtonWidget({super.key, required this.metamaskService});
 

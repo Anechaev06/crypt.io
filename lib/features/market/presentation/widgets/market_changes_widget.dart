@@ -1,4 +1,4 @@
-import 'package:maskify/features/coin/data/repositories/coin_service.dart';
+import 'package:maskify/features/coin/data/repositories/coin_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -7,10 +7,10 @@ class MarketChanges extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final coinService = Get.find<CoinService>();
+    final coinRepository = Get.find<CoinRepository>();
     return Obx(
       () {
-        final marketChanges = coinService.marketChanges24H();
+        final marketChanges = coinRepository.marketChanges24H();
 
         final marketChangesText = marketChanges > 0
             ? 'Market is up'

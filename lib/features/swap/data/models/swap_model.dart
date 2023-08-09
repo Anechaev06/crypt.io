@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../repositories/swap_service.dart';
+import '../repositories/swap_repository.dart';
 
 class SwapModel extends ChangeNotifier {
   static const List<String> tokenOptions = ['ETH', 'USDT'];
@@ -27,7 +27,7 @@ class SwapModel extends ChangeNotifier {
     BigInt amountIn = BigInt.parse(token1Amount);
     BigInt minAmountOut = BigInt.parse(token2Amount);
 
-    await Get.find<SwapService>().swapTokens(
+    await Get.find<SwapRepository>().swapTokens(
       userPrivateKey,
       tokenInAddress,
       tokenOutAddress,

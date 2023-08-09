@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 enum CoinSortType { all, topGainers, topLosers }
 
-class CoinService extends GetxController {
+class CoinRepository extends GetxController {
   static const _apiUrl =
       "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false";
   static const _favoritesKey = 'favorites';

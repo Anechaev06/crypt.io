@@ -1,5 +1,5 @@
 import '../models/swap_model.dart';
-import '../../../metamask/data/repositories/metamask_service.dart';
+import '../../../metamask/data/repositories/metamask_repository.dart';
 
 class SwapController {
   final SwapModel _model;
@@ -25,7 +25,7 @@ class SwapController {
   void enterAmount2(String val) => _model.token2Amount = val;
 
   Future<void> swapTokens() async {
-    String? userPrivateKey = MetamaskService().privateKey;
+    String? userPrivateKey = MetamaskRepository().privateKey;
     if (userPrivateKey != null) {
       await _model.swapTokens(userPrivateKey);
     }

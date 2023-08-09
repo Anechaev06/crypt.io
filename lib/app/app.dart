@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:maskify/features/login/presentation/pages/login_page.dart';
-import 'package:maskify/features/metamask/data/repositories/metamask_service.dart';
-import 'package:maskify/features/swap/data/repositories/swap_service.dart';
-import 'package:maskify/features/coin/data/repositories/coin_service.dart';
+import 'package:maskify/features/metamask/data/repositories/metamask_repository.dart';
+import 'package:maskify/features/swap/data/repositories/swap_repository.dart';
+import 'package:maskify/features/coin/data/repositories/coin_repository.dart';
 import 'package:maskify/app/themes/theme.dart';
 import 'package:maskify/app/presentation/pages/app_page.dart';
 
@@ -15,9 +15,9 @@ class App extends StatelessWidget {
   }
 
   void _initServices() {
-    Get.lazyPut(() => MetamaskService());
-    Get.lazyPut(() => SwapService());
-    Get.lazyPut(() => CoinService());
+    Get.lazyPut(() => MetamaskRepository());
+    Get.lazyPut(() => SwapRepository());
+    Get.lazyPut(() => CoinRepository());
   }
 
   @override

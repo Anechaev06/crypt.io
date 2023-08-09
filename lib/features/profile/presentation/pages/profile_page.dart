@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:maskify/app/constants/colors.dart';
-import 'package:maskify/features/metamask/data/repositories/metamask_service.dart';
+import 'package:maskify/features/metamask/data/repositories/metamask_repository.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import '../../../coin/presentation/widgets/favorite_coin_widget.dart';
 import '../widgets/profile_section_widget.dart';
@@ -12,11 +12,11 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final metamaskService = Get.find<MetamaskService>();
+    final metamaskRepository = Get.find<MetamaskRepository>();
     final panelHeight = MediaQuery.of(context).size.height / 2;
 
     return SlidingUpPanel(
-      panel: SettingsSection(metamaskService: metamaskService),
+      panel: SettingsSection(metamaskRepository: metamaskRepository),
       color: bgColor,
       minHeight: 60,
       maxHeight: panelHeight,
@@ -24,8 +24,8 @@ class ProfilePage extends StatelessWidget {
       borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
       body: RefreshIndicator(
         onRefresh: () async {
-          await metamaskService
-              .updateBalanceFromBlockchain(metamaskService.userAddress.value);
+          await metamaskRepository.updateBalanceFromBlockchain(
+              metamaskRepository.userAddress.value);
         },
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
@@ -33,7 +33,7 @@ class ProfilePage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                ProfileSection(metamaskService: metamaskService),
+                ProfileSection(metamaskService: metamaskRepository),
                 const FavoriteCoinListWidget(),
               ],
             ),

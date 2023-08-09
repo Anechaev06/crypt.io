@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../metamask/data/repositories/metamask_service.dart';
+import '../../../metamask/data/repositories/metamask_repository.dart';
 
 class LoginRepository {
   static Future<bool> isLoggedIn() async {
@@ -26,8 +26,8 @@ class LoginRepository {
   }
 
   static Future<void> loginUser(String privateKey) async {
-    final MetamaskService metamaskService = Get.find();
-    await metamaskService.loginWithPrivateKey(privateKey);
+    final MetamaskRepository metamaskRepository = Get.find();
+    await metamaskRepository.loginWithPrivateKey(privateKey);
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('isLoggedIn', true);
   }

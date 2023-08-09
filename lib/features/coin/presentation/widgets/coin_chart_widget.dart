@@ -1,13 +1,14 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import '../../../../app/constants/colors.dart';
-import '../../data/repositories/coin_service.dart';
+import '../../data/repositories/coin_repository.dart';
 
 class CoinChart extends StatefulWidget {
-  final CoinService service;
+  final CoinRepository coinRepository;
   final int index;
 
-  const CoinChart({super.key, required this.service, required this.index});
+  const CoinChart(
+      {super.key, required this.coinRepository, required this.index});
 
   @override
   State<CoinChart> createState() => _CoinChartState();
@@ -41,8 +42,8 @@ class _CoinChartState extends State<CoinChart> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: widget.service.fetchCoinChartData(
-          widget.service.coinsList[widget.index].id, _selectedInterval),
+      future: widget.coinRepository.fetchCoinChartData(
+          widget.coinRepository.coinsList[widget.index].id, _selectedInterval),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return Column(

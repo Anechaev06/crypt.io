@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../login/presentation/pages/login_page.dart';
-import '../../../metamask/data/repositories/metamask_service.dart';
+import '../../../metamask/data/repositories/metamask_repository.dart';
 
 class SettingsSection extends StatelessWidget {
-  final MetamaskService metamaskService;
+  final MetamaskRepository metamaskRepository;
 
-  const SettingsSection({super.key, required this.metamaskService});
+  const SettingsSection({super.key, required this.metamaskRepository});
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +22,12 @@ class SettingsSection extends StatelessWidget {
             "Settings",
             style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
           ),
-          HideBalanceWidget(metamaskService: metamaskService),
+          HideBalanceWidget(metamaskRepository: metamaskRepository),
           const Divider(height: 5, thickness: 0.25, color: Colors.grey),
-          NetworkWidget(metamaskService: metamaskService),
+          NetworkWidget(metamaskRepository: metamaskRepository),
           const Divider(height: 5, thickness: 0.25, color: Colors.grey),
-          PushNotificationsWidget(metamaskService: metamaskService),
-          LogoutButton(metamaskService: metamaskService),
+          PushNotificationsWidget(metamaskRepository: metamaskRepository),
+          LogoutButton(metamaskRepository: metamaskRepository),
         ],
       ),
     );
@@ -51,9 +51,9 @@ class DragHandle extends StatelessWidget {
 }
 
 class HideBalanceWidget extends StatelessWidget {
-  final MetamaskService metamaskService;
+  final MetamaskRepository metamaskRepository;
 
-  const HideBalanceWidget({super.key, required this.metamaskService});
+  const HideBalanceWidget({super.key, required this.metamaskRepository});
 
   @override
   Widget build(BuildContext context) {
@@ -65,9 +65,9 @@ class HideBalanceWidget extends StatelessWidget {
           children: [
             const Text("Hide Balance", style: TextStyle(fontSize: 20)),
             Switch(
-              value: metamaskService.hideBalance.value,
+              value: metamaskRepository.hideBalance.value,
               onChanged: (value) {
-                metamaskService.hideBalance.value = value;
+                metamaskRepository.hideBalance.value = value;
               },
             ),
           ],
@@ -78,9 +78,9 @@ class HideBalanceWidget extends StatelessWidget {
 }
 
 class NetworkWidget extends StatelessWidget {
-  final MetamaskService metamaskService;
+  final MetamaskRepository metamaskRepository;
 
-  const NetworkWidget({super.key, required this.metamaskService});
+  const NetworkWidget({super.key, required this.metamaskRepository});
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +95,7 @@ class NetworkWidget extends StatelessWidget {
           ),
           Obx(
             () => DropdownButton<String>(
-              value: metamaskService.activeNetwork.value,
+              value: metamaskRepository.activeNetwork.value,
               items: <String>['eth', 'bsc'].map((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
@@ -104,7 +104,7 @@ class NetworkWidget extends StatelessWidget {
               }).toList(),
               onChanged: (newValue) {
                 if (newValue != null) {
-                  metamaskService.switchNetwork(newValue);
+                  metamaskRepository.switchNetwork(newValue);
                 }
               },
             ),
@@ -116,9 +116,9 @@ class NetworkWidget extends StatelessWidget {
 }
 
 class PushNotificationsWidget extends StatelessWidget {
-  final MetamaskService metamaskService;
+  final MetamaskRepository metamaskRepository;
 
-  const PushNotificationsWidget({super.key, required this.metamaskService});
+  const PushNotificationsWidget({super.key, required this.metamaskRepository});
 
   @override
   Widget build(BuildContext context) {
@@ -130,9 +130,9 @@ class PushNotificationsWidget extends StatelessWidget {
           children: [
             const Text("Push Notifications", style: TextStyle(fontSize: 20)),
             Switch(
-                value: metamaskService.isNotificationEnabled.value,
+                value: metamaskRepository.isNotificationEnabled.value,
                 onChanged: (value) =>
-                    metamaskService.isNotificationEnabled.value = value),
+                    metamaskRepository.isNotificationEnabled.value = value),
           ],
         ),
       ),
@@ -141,9 +141,9 @@ class PushNotificationsWidget extends StatelessWidget {
 }
 
 class LogoutButton extends StatelessWidget {
-  final MetamaskService metamaskService;
+  final MetamaskRepository metamaskRepository;
 
-  const LogoutButton({super.key, required this.metamaskService});
+  const LogoutButton({super.key, required this.metamaskRepository});
 
   @override
   Widget build(BuildContext context) {
@@ -151,7 +151,7 @@ class LogoutButton extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       child: OutlinedButton(
         onPressed: () async {
-          metamaskService.logout();
+          metamaskRepository.logout();
 
           SharedPreferences prefs = await SharedPreferences.getInstance();
           prefs.setBool('isLoggedIn', false);

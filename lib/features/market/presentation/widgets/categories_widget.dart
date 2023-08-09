@@ -2,7 +2,7 @@ import 'package:maskify/features/market/presentation/widgets/search_widget.dart'
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../app/constants/colors.dart';
-import '../../../coin/data/repositories/coin_service.dart';
+import '../../../coin/data/repositories/coin_repository.dart';
 
 class CategoriesWidget extends StatefulWidget {
   const CategoriesWidget({super.key});
@@ -14,12 +14,12 @@ class CategoriesWidget extends StatefulWidget {
 class _CategoriesWidgetState extends State<CategoriesWidget> {
   CoinSortType _selectedSortType = CoinSortType.all;
 
-  CoinService get coinService => Get.find<CoinService>();
+  CoinRepository get coinRepository => Get.find<CoinRepository>();
 
   @override
   void initState() {
     super.initState();
-    coinService.sortCoins(_selectedSortType);
+    coinRepository.sortCoins(_selectedSortType);
   }
 
   TextEditingController textController = TextEditingController();
@@ -38,7 +38,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
               SearchWidget(onSearch: (searchText) {
-                coinService.searchCoins(searchText);
+                coinRepository.searchCoins(searchText);
               }),
             ],
           ),
@@ -87,6 +87,6 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
 
   void _updateSortType(CoinSortType type) {
     setState(() => _selectedSortType = type);
-    coinService.sortCoins(type);
+    coinRepository.sortCoins(type);
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../data/repositories/coin_service.dart';
+import '../../data/repositories/coin_repository.dart';
 import '../widgets/coin_chart_widget.dart';
 import '../widgets/favorite_coin_widget.dart';
 
@@ -10,8 +10,8 @@ class CoinPage extends StatelessWidget {
   const CoinPage({super.key, required this.index});
   @override
   Widget build(BuildContext context) {
-    final coinService = Get.find<CoinService>();
-    final coin = coinService.coinsList[index];
+    final coinRepository = Get.find<CoinRepository>();
+    final coin = coinRepository.coinsList[index];
     final coinPrice = coin.currentPrice;
     final coinPriceChange = coin.priceChangePercentage24H;
     final coinPriceChangeColor = coinPriceChange > 0
@@ -33,7 +33,7 @@ class CoinPage extends StatelessWidget {
           elevation: 0,
           centerTitle: true,
           actions: [FavoriteCoinButton(index: index)],
-          title: Text(coinService.coinsList[index].symbol.toUpperCase()),
+          title: Text(coinRepository.coinsList[index].symbol.toUpperCase()),
         ),
         body: Obx(() {
           return Column(
@@ -46,7 +46,7 @@ class CoinPage extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          "${coinService.coinsList[index].symbol.toUpperCase()}1 = ",
+                          "${coinRepository.coinsList[index].symbol.toUpperCase()}1 = ",
                           style: Theme.of(context).textTheme.headlineMedium,
                         ),
                         Text(
@@ -79,7 +79,7 @@ class CoinPage extends StatelessWidget {
               const SizedBox(height: 50),
 
               // Coin Chart
-              CoinChart(service: coinService, index: index),
+              CoinChart(service: coinRepository, index: index),
             ],
           );
         }),

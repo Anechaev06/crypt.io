@@ -3,15 +3,15 @@ import 'package:maskify/features/market/presentation/widgets/categories_widget.d
 import 'package:maskify/features/coin/presentation/widgets/coin_widget.dart';
 import 'package:maskify/features/market/presentation/widgets/market_changes_widget.dart';
 import 'package:get/get.dart';
-import '../../../coin/data/repositories/coin_service.dart';
+import '../../../coin/data/repositories/coin_repository.dart';
 
 class MarketPage extends StatelessWidget {
   const MarketPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final coinService = Get.find<CoinService>();
-    Future refreshData() => coinService.fetchCoins();
+    final coinRepository = Get.find<CoinRepository>();
+    Future refreshData() => coinRepository.fetchCoins();
 
     return Padding(
       padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
@@ -33,7 +33,7 @@ class MarketPage extends StatelessWidget {
   }
 
   Widget _buildCoinList() {
-    return GetBuilder<CoinService>(
+    return GetBuilder<CoinRepository>(
       builder: (service) {
         return ListView.builder(
           shrinkWrap: true,
@@ -43,7 +43,7 @@ class MarketPage extends StatelessWidget {
             children: [
               CoinWidget(
                 index: index,
-                service: service,
+                coinRepository: service,
               ),
               if (index != service.coinsList.length - 1)
                 const Divider(

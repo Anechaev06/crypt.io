@@ -2,14 +2,14 @@ import 'package:maskify/app/constants/colors.dart';
 import 'package:maskify/features/coin/presentation/widgets/coin_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../data/repositories/coin_service.dart';
+import '../../data/repositories/coin_repository.dart';
 
 class FavoriteCoinListWidget extends StatelessWidget {
   const FavoriteCoinListWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<CoinService>(
+    return GetBuilder<CoinRepository>(
       builder: (service) {
         final favoriteCoinIds = service.favorites;
         if (favoriteCoinIds.isEmpty) {
@@ -37,7 +37,7 @@ class FavoriteCoinListWidget extends StatelessWidget {
                 ),
                 itemBuilder: (context, index) => CoinWidget(
                   index: favoriteCoinsIndices[index],
-                  service: service,
+                  coinRepository: service,
                 ),
               ),
             ),
@@ -54,7 +54,7 @@ class FavoriteCoinButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<CoinService>(
+    return GetBuilder<CoinRepository>(
       builder: (service) {
         final String coinId = service.coinsList[index].id;
         final isFavorite = service.favorites.contains(coinId);
