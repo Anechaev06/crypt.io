@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:maskify/features/login/data/repositories/login_repository.dart';
-import 'app/app.dart';
+import 'src/app.dart';
+import 'src/features/auth/repositories/login_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
